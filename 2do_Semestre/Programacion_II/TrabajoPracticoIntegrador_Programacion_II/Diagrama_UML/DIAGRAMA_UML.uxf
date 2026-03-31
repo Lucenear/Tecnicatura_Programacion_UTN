@@ -1,0 +1,176 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><element><id>UMLClass</id><coordinates><x>273</x><y>812</y><w>357</w><h>336</h></coordinates><panel_attributes>Empleado
+--
+- id: Long
+- eliminado: Boolean
+- nombre : String
+- apellido : String
+- dni: String
+- email : String
+- fechaIngreso : LocalDate
+- area : String
+- legajo Legajo
+--
++ Empleado ( nombre : String, apellido : String, dni : String, email : String  ) : Empleado
++ getID() : Long
++ setID() : void
++ getEliminado() : Boolean
++ setEliminado() : void
++ getNombre() : String
++ setNombre() : void
++ getApellido() : String
++ setApellido() : void
++ getDni() : String
++ setDni() : void
++ getEmail() : String
++ setEmail() : void
++ getFechaIngreso() : LocalDate
++ setFechaIngreso() : void
++ getArea() : String
++ setArea() : void
++ getLegajo() : Legajo
++ setLegajo : void
++ toString() : String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>833</x><y>812</y><w>483</w><h>329</h></coordinates><panel_attributes>Legajo
+--
+-  id: Long
+- eliminado : Boolean 
+- nroLegajo : String 
+- categoria : String 
+- estado : Estado 
+- fechaAlta : LocalDate 
+- observaciones : String 
+--
++ Legajo (nroLegajo : String, categoria : String, estado : Estado, fechaAlta : LocalDate, observaciones : String ) : Legajo
++ getId() : Long
++ setId() : void 
++ getEliminado()  : Boolean
++ setEliminado() : void 
++ getNroLegajo() : String
++ setNroLegajo(): void 
++getCategoria(): String
++ setCategoria() : void 
++ getEstado() : Estado
++ setEstado() : void 
++ getFechaAlta() : LocalDate
++ setFechaAlta() : void 
++ getObservaciones() : String
++ setObservaciones() : void 
++ toString() : String
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>630</x><y>28</y><w>364</w><h>98</h></coordinates><panel_attributes>DatabaseConnection
+--
+-  url: String
+-  username : String
+- password : String
+
+--
++ DatabaseConection( dbname: String, user: String, pass: String) : DatabaseConnection
++ getConnection () : Connection
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>616</x><y>252</y><w>364</w><h>154</h></coordinates><panel_attributes>genericDaoimpl
+--
++ leerTodos(connection: Connection): List&lt;T&gt; 
++   leer(id: long, connection: Connection): Optional&lt;T&gt; 
+
+# getInsertSql(): String  
+# getUpdateSql(): String 
+# getDeleteSql(): String 
+# getSelectSql(): String 
+# setParametersInsert(ps: PreparedStatement, entidad: T): void  
+# setParametersUpdate(ps: PreparedStatement, entidad: T): void  
+# mapearResultSet(rs: ResultSet): T
+# getSoftDeleteSql(): String 
+# getTableName(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>805</x><y>154</y><w>21</w><h>91</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>602</x><y>1428</y><w>364</w><h>245</h></coordinates><panel_attributes>AppMenu
+--
+- legajoService : LegajoService
+- empleadoService: EmpleadoServide
+- scanner : Scanner
+--
++ AppMenu( dbConnection : DatabaseConnection )
++ mostrarMenu(): void
++ menuLegajo(): void
++ menuEmpleado(): void
++ leerEntero(): int	
++ leerEnteroLargo(): Long
++ crearLegajo(): void
++ mostrarLegajos(): void
++ leerLegajoPorId(): void
++ actualizarLegajo(): void
++ eliminarLegajo() : void
++ crearEmpleado() : void
++ leerEmpleadoPorId() : void
++ listarEmpleados() : void
++ buscarPorDni() : void
++ actualizarEmpleado() : void
++  eliminarEmpleado(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>378</x><y>231</y><w>861</w><h>413</h></coordinates><panel_attributes>&lt;&lt; Dao &gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>854</x><y>476</y><w>364</w><h>91</h></coordinates><panel_attributes>legajoDao
+--
+# setParametersInsert( ps: PreparedStatement, legajo : Legajo ) : void
+# setParametersUpdate( ps: PreparedStatement, legajo : Legajo ) : void
+# mapearResultSet( rs : ResultSet,  ) : Legajo
+# crear( legajo: Legajo, connection : Connection ) : Long
+# actualizar( legajo: Legajo, connection : Connection  ) : void
+# eliminar( id: Long, connection : Connection  ) : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>399</x><y>483</y><w>364</w><h>91</h></coordinates><panel_attributes>empleadoDao
+--
+#  getDeleteSql() : String
+#  getTableName() : String
+# getInsertSql() : String
+# getUpdateSql() : String
+#  setParametersInsert ( ps: PreparedStatement, empleado : Empleado ) : void
+# mapearResultSet( rs : ResultSet ) :Empleado
+# crear( empleado : Empleado, connection : Connection) : Long  
+# actualizar( empleado : Empleado, connection : Connection ) : void
+# eliminar(id : Long , connection : Connection ) : void
+#  leer (id :Long , connection : Connection )  : Optional&lt;Empleado&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>224</x><y>728</y><w>1148</w><h>462</h></coordinates><panel_attributes>&lt;&lt; Entities&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>525</x><y>1400</y><w>511</w><h>308</h></coordinates><panel_attributes>&lt;&lt; Main&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>609</x><y>0</y><w>406</w><h>161</h></coordinates><panel_attributes>&lt;&lt; Config&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>602</x><y>1904</y><w>364</w><h>245</h></coordinates><panel_attributes>empleadoService
+--
+- legajoService : LegajoService
+--
++ EmpleadoService ( dao : EmpleadoDao , legajoService : LegajoService , dbConnection : DatabaseConnection ) : Empleado
++ insert( empleado : Empleado ) : Empleado
++  update( empleado : Empleado ) : Empleado
++ buscarPorDni( dni :String ) : Empleado
++mostrarActivos( ) : List&lt;Empleado&gt;
++  eliminarLogico( id : Long ) : void
++ obtenerPorId( id : Long ) : Empleado
++ validarEmpleado( empleado : Empleado ) : void
++ leerLegajoPorId(): void
++ actualizarLegajo(): void
++ eliminarLegajo() : void
++ crearEmpleado() : void
++ leerEmpleadoPorId() : void
++ listarEmpleados() : void
++ buscarPorDni() : void
++ actualizarEmpleado() : void
++  eliminarEmpleado(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1106</x><y>1953</y><w>364</w><h>112</h></coordinates><panel_attributes>legajoService
+--
++ LegajoService( dao : LegajoDao , dbConnection : DatabaseConnection ) :: LegajoService
++ insert( legajo : Legajo ) : Legajo
++ update( legajo : Legajo ) : Legajo
++ mostrarActivos() : List&lt;Legajo&gt;
++ obtenerPorId( id : Long ) : Legajo
+- validarLegajo(legajo : Legajo ) : void
++  eliminarLogico( id : Long ) : void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>63</x><y>1939</y><w>364</w><h>126</h></coordinates><panel_attributes>genericService
+--
+# dao : GenericDao&lt;T&gt;
+# DatabaseConnection : DatabaseConnection
+--
++ GenericService(GenericDao&lt;T&gt; dao, DatabaseConnection dbConnection) : GenericService
+# withTransaction( operation : TransactionOperation&lt;R&gt;) : R
++ insert( entity : T) : T
++ update( entity : T) :T
++ delete(Long id) : void
++ getById( id : Long ): T
++ getAll() : List&lt;T&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>1995</y><w>196</w><h>28</h></coordinates><panel_attributes>lt=&lt;-
+&lt;&lt; extend GenericService&lt;Empleado&gt; &gt;&gt;</panel_attributes><additional_attributes>10;20;260;20</additional_attributes></element><element><id>Relation</id><coordinates><x>959</x><y>2002</y><w>161</w><h>35</h></coordinates><panel_attributes>lt=&lt;&lt;-
+- legajoService
+m1=1</panel_attributes><additional_attributes>210;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>791</x><y>637</y><w>21</w><h>105</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;10;130</additional_attributes></element><element><id>Relation</id><coordinates><x>770</x><y>1183</y><w>21</w><h>231</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;10;310</additional_attributes></element><element><id>UMLClass</id><coordinates><x>42</x><y>1841</y><w>1456</w><h>378</h></coordinates><panel_attributes>&lt;&lt; Service&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>763</x><y>1701</y><w>21</w><h>154</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>10;10;10;200</additional_attributes></element><element><id>Relation</id><coordinates><x>574</x><y>399</y><w>175</w><h>98</h></coordinates><panel_attributes>lt=&lt;-
+&lt;&lt; extends GenericDaoImpl&lt;Empleado &gt; &gt;&gt;</panel_attributes><additional_attributes>200;10;50;120</additional_attributes></element><element><id>Relation</id><coordinates><x>875</x><y>399</y><w>189</w><h>91</h></coordinates><panel_attributes>lt=&lt;-
+&lt;&lt; extends GenericDaoImpl&lt;Legajo&gt; &gt;&gt;</panel_attributes><additional_attributes>10;10;250;110</additional_attributes></element><element><id>Relation</id><coordinates><x>238</x><y>2058</y><w>1085</w><h>154</h></coordinates><panel_attributes>lt=&lt;-
+&lt;&lt; extend GenericService&lt;Empleado&gt; &gt;&gt;</panel_attributes><additional_attributes>10;10;10;200;1530;200;1530;20</additional_attributes></element><element><id>Relation</id><coordinates><x>623</x><y>938</y><w>224</w><h>35</h></coordinates><panel_attributes>lt=&lt;&lt;-
+-Legajo
+m1=1</panel_attributes><additional_attributes>300;20;10;20</additional_attributes></element></diagram>

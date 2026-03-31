@@ -1,0 +1,3 @@
+Este es un archivo de ejemplo.
+Contiene varias lineas.
+Usado para probar la lectura en Java.
