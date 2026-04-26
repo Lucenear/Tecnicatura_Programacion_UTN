@@ -1,0 +1,115 @@
+:root {
+    --color-primario: #ff6347;
+    --color-fondo: #f0f0f0;
+    --color-texto: #333;
+    --color-blanco: #fff;
+    --color-borde: #ddd;
+    --color-focus: #ff4500;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--color-fondo);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.contenedor-login {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.tarjeta-formulario {
+    background-color: var(--color-blanco);
+    padding: 2.5rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 0.2rem 0.8rem rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 22rem;
+    text-align: center;
+    border: 1px solid var(--color-borde);
+}
+
+h1 {
+    color: var(--color-primario);
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.texto-subtitulo {
+    color: var(--color-texto);
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.grupo-input {
+    text-align: left;
+    margin-bottom: 1.2rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: bold;
+    color: var(--color-texto);
+    font-size: 0.9rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--color-borde);
+    border-radius: 0.3rem;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-focus);
+}
+
+.boton-ingresar {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--color-primario);
+    color: var(--color-blanco);
+    border: none;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: 0.3s;
+}
+
+.boton-ingresar:hover {
+    background-color: var(--color-focus);
+}
+
+.footer-formulario {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--color-texto);
+}
+
+.footer-formulario a {
+    color: var(--color-primario);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-formulario a:hover {
+    text-decoration: underline;
+}
