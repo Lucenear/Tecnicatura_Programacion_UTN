@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Store - Catálogo</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>🍔 Food Store</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="#">Mis Pedidos</a>
+            <a href="#">Carrito</a>
+            <a href="admin.html">Panel Admin</a>
+        </nav>
+    </header>
+
+    <aside>
+        <h2>Categorías</h2>
+        <ul id="lista-categorias"></ul>
+    </aside>
+
+    <main>
+        <form>
+            <input type="text" placeholder="Buscar productos...">
+            <button type="submit">Buscar</button>
+        </form>
+
+        <h2>Productos Destacados</h2>
+        <section id="contenedor-productos"></section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Food Store. Todos los derechos reservados.</p>
+        <p>Contacto: <a href="mailto:info@foodstore.com.ar">info@foodstore.com.ar</a></p>
+    </footer>
+
+    <script src="./js/data.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
