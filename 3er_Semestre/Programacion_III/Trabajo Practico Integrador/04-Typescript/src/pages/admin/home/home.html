@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="../../../style.css">
+    <script type="module" src="../../../main.ts"></script>
+</head>
+
+<body>
+    <header>
+        <h1>⚙️ Panel Admin</h1>
+        <nav>
+            <a id="logoutButton">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Gestión de Productos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-productos"></tbody>
+            </table>
+        </section>
+
+        <section style="margin-top: 3rem;">
+            <h3>📝 Agregar Producto Rápido</h3>
+            <div class="tarjeta-formulario" style="max-width: 500px; margin: 1rem 0; text-align: left;">
+                <form id="form-producto">
+                    <div class="grupo-input">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="precio">Precio:</label>
+                        <input type="number" id="precio" required>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="stock">Stock:</label>
+                        <input type="number" id="stock" required>
+                    </div>
+                    <div class="grupo-input">
+                        <label for="categoria">Categoría:</label>
+                        <select id="categoria">
+                            <option value="Hamburguesas">Hamburguesas</option>
+                            <option value="Pizzas">Pizzas</option>
+                            <option value="Papas Fritas">Papas Fritas</option>
+                            <option value="Bebidas">Bebidas</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="boton-ingresar">Guardar Producto</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Food Store. Todos los derechos reservados.</p>
+        <p>Contacto: info@foodstore.com.ar</p>
+    </footer>
+
+    <script type="module" src="./home.ts"></script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Store - Catálogo</title>
+    <link rel="stylesheet" href="../../../style.css">
+    <script type="module" src="../../../main.ts"></script>
+</head>
+
+<body>
+    <header>
+        <h1>🍔 Food Store</h1>
+        <nav>
+            <a href="#">Inicio</a>
+            <a href="#">Mis Pedidos</a>
+            <a href="#">Carrito</a>
+            <a id="logoutButton">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <aside>
+        <h2>Categorías</h2>
+        <ul id="lista-categorias"></ul>
+    </aside>
+
+    <main>
+        <form id="form-busqueda" style="margin-bottom: 2.5rem; display: flex; gap: 0.5rem; max-width: 500px;">
+            <input type="text" id="input-busqueda" placeholder="Buscar productos..." style="flex: 1; padding: 0.8rem; border: 1px solid var(--color-borde); border-radius: 5px; outline: none;">
+            <button type="submit" style="padding: 0.8rem 1.5rem; background-color: var(--color-primario); color: var(--color-blanco); border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Buscar</button>
+        </form>
+
+        <h2 style="margin-bottom: 2rem; border-left: 4px solid var(--color-primario); padding-left: 1rem;">Productos Destacados</h2>
+        <section id="contenedor-productos"></section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Food Store. Todos los derechos reservados.</p>
+        <p>Contacto: info@foodstore.com.ar</p>
+    </footer>
+
+    <script type="module" src="./home.ts"></script>
+</body>
+
+</html>

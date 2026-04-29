@@ -1,0 +1,254 @@
+:root {
+  --color-primario: #ff6347;
+  --color-fondo: #f8f9fa;
+  --color-texto: #333;
+  --color-blanco: #fff;
+  --color-borde: #eee;
+  --color-focus: #ff4500;
+  --color-sombra: rgba(0, 0, 0, 0.05);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  line-height: 1.6;
+}
+
+header {
+  background-color: var(--color-blanco);
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px var(--color-sombra);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header h1 {
+  color: var(--color-primario);
+  font-size: 1.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--color-texto);
+  margin-left: 1.5rem;
+  font-weight: 500;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+nav a:hover {
+  color: var(--color-primario);
+}
+
+aside {
+  padding: 1.5rem 5%;
+  background-color: var(--color-blanco);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+#lista-categorias {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+#lista-categorias li a {
+  text-decoration: none;
+  color: var(--color-texto);
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--color-borde);
+  border-radius: 20px;
+  background-color: var(--color-fondo);
+  transition: 0.3s;
+  font-size: 0.85rem;
+}
+
+#lista-categorias li a:hover {
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+}
+
+main {
+  padding: 2rem 5%;
+}
+
+#contenedor-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.producto-card {
+  background-color: var(--color-blanco);
+  border-radius: 10px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 10px var(--color-sombra);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.producto-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.producto-card:hover img {
+  transform: scale(1.025);
+}
+
+.producto-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.producto-card p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.footer-card {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.producto-card .precio {
+  font-size: 1.2rem;
+  color: var(--color-primario);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.acciones-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-detalles {
+  padding: 0.7rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  transition: 0.3s;
+}
+
+.btn-agregar {
+  padding: 0.7rem;
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-agregar:hover {
+  background-color: var(--color-focus);
+}
+
+.contenedor-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 1rem;
+}
+
+.tarjeta-formulario {
+  background-color: var(--color-blanco);
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--color-sombra);
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+}
+
+.grupo-input {
+  text-align: left;
+  margin-bottom: 1.2rem;
+}
+
+.grupo-input label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.grupo-input input, .grupo-input select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--color-borde);
+  border-radius: 5px;
+}
+
+.boton-ingresar {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--color-primario);
+  color: var(--color-blanco);
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.footer-formulario {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  background-color: var(--color-blanco);
+}
+
+th, td {
+  padding: 1rem;
+  border: 1px solid var(--color-borde);
+  text-align: left;
+}
+
+th {
+  background-color: var(--color-fondo);
+}
+
+footer {
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--color-blanco);
+  margin-top: 2rem;
+  border-top: 1px solid var(--color-borde);
+}
