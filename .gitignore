@@ -1,0 +1,5 @@
+# Ignorar la carpeta del TPI Final de la materia actual
+TPI_Final_Parte_II/
+
+# Ignorar archivos privados de NetBeans del semestre anterior
+**/nbproject/private/
