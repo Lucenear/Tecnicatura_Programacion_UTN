@@ -1,0 +1,16 @@
+{
+  "name": "tp_vii_drivers_conexion_odm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^7.4.0",
+    "mongoose": "^9.7.3"
+  }
+}
