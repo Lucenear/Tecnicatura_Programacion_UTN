@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Store - Admin Productos</title>
+    <link rel="stylesheet" href="../../../style.css">
+    <script type="module" src="../../../main.ts"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Food<span>Store</span> <span style="font-size: 0.8rem; font-weight: 400; letter-spacing: 2px; margin-left: 0.5rem; color: #a4b0be; text-transform: uppercase;">Admin</span></div>
+        <nav>
+            <a href="../adminHome/index.html">Dashboard</a>
+            <a id="logoutButton" style="color: var(--color-primario); font-weight: 700; cursor:pointer;">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div id="app" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+        <main>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Gestión de Productos</h2>
+                <button id="btn-new" class="btn btn-primary">+ Nuevo Producto</button>
+            </div>
+            
+            <div class="admin-nav" style="margin-bottom: 2rem;">
+                <a href="../adminHome/index.html" class="btn btn-back">Volver al Dashboard</a>
+            </div>
+
+            <!-- Form Modal -->
+            <div id="form-container" style="display:none; background: var(--color-glass); padding: 2rem; border-radius: var(--radius); margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--color-borde);">
+                <h3 id="form-title" style="margin-bottom: 1.5rem;">Nuevo Producto</h3>
+                <form id="crud-form">
+                    <input type="hidden" id="prod-id">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" id="prod-nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Precio ($)</label>
+                            <input type="number" id="prod-precio" required min="0" step="0.01">
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Descripción</label>
+                            <textarea id="prod-desc" required rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock</label>
+                            <input type="number" id="prod-stock" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Imagen URL</label>
+                            <input type="url" id="prod-imagen" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Categoría</label>
+                            <select id="prod-categoria" required>
+                                <!-- Loaded dynamically -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Disponible</label>
+                            <select id="prod-disponible">
+                                <option value="true">Sí</option>
+                                <option value="false">No</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 1rem;">
+                        <button type="button" id="btn-cancel" class="btn btn-secondary">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Food Store Admin.</p>
+    </footer>
+
+    <script type="module" src="./main.ts"></script>
+</body>
+</html>

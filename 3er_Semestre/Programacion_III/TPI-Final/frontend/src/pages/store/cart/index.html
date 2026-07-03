@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Store - Carrito de Compras</title>
+    <link rel="stylesheet" href="../../../style.css">
+    <style>
+        .cart-container {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .cart-items {
+            flex: 2;
+            min-width: 300px;
+        }
+        .cart-summary {
+            flex: 1;
+            min-width: 300px;
+            background: var(--color-glass);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: var(--color-blanco);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+        }
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: calc(var(--radius) - 4px);
+        }
+        .cart-item-info {
+            flex: 1;
+        }
+        .cart-item-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .cart-item-info p {
+            color: #636e72;
+            font-size: 0.9rem;
+        }
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--color-primario);
+            font-size: 1.2rem;
+        }
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .quantity-selector input {
+            text-align: center;
+            -moz-appearance: textfield;
+        }
+        .quantity-selector input::-webkit-outer-spin-button,
+        .quantity-selector input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .btn-remove {
+            background: #ff7675;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .summary-total {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primario);
+            border-top: 1px solid var(--color-borde);
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--color-blanco);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+    </style>
+    <script type="module" src="../../../main.ts"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Food<span>Store</span></div>
+        <nav>
+            <a href="../home/index.html">Catálogo</a>
+            <a href="../../client/orders/index.html">Mis Pedidos</a>
+            <a href="#" class="active">Carrito <span id="cart-count" class="badge ENTREGADO" style="display:none; margin-left: 5px;">0</span></a>
+            <a id="logoutButton" style="color: var(--color-primario); font-weight: 700;">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div id="app" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+        <main>
+            <h2>Tu Carrito de Compras</h2>
+            
+            <div id="cart-content" class="cart-container">
+                <!-- Cart loaded here -->
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Food Store. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module" src="./main.ts"></script>
+</body>
+</html>

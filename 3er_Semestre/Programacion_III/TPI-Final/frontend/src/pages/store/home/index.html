@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Store - Catálogo</title>
+    <link rel="stylesheet" href="../../../style.css">
+    <script type="module" src="../../../main.ts"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Food<span>Store</span></div>
+        <nav id="store-nav">
+            <a href="#" class="active">Catálogo</a>
+            <a href="../../client/orders/index.html" id="link-orders">Mis Pedidos</a>
+            <a href="../cart/index.html" id="link-cart">Carrito <span id="cart-count" class="badge ENTREGADO" style="display:none; margin-left: 5px;">0</span></a>
+            <a id="logoutButton" style="color: var(--color-primario); font-weight: 700; cursor: pointer;">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div id="app">
+        <aside>
+            <ul id="lista-categorias"></ul>
+        </aside>
+
+        <main>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; justify-content: space-between; align-items: center;">
+                <form id="form-busqueda" style="display: flex; gap: 0.5rem; flex: 1; min-width: 250px;">
+                    <input type="text" id="input-busqueda" placeholder="Buscar productos..." style="flex: 1;">
+                </form>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <label style="font-weight: 600; font-size: 0.9rem;">Ordenar por:</label>
+                    <select id="select-orden" style="padding: 0.8rem; border-radius: var(--radius); border: 1px solid var(--color-borde); background: var(--color-blanco);">
+                        <option value="nombre_az">Nombre (A-Z)</option>
+                        <option value="nombre_za">Nombre (Z-A)</option>
+                        <option value="precio_asc">Precio (Menor a Mayor)</option>
+                        <option value="precio_desc">Precio (Mayor a Menor)</option>
+                    </select>
+                </div>
+            </div>
+
+            <h2 style="margin-bottom: 2rem;">Nuestro Menú</h2>
+            <section id="contenedor-productos"></section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Food Store. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module" src="./main.ts"></script>
+</body>
+</html>

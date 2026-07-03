@@ -1,0 +1,16 @@
+<configuration>
+    <!-- Silenciar todo excepto errores -->
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <!-- Evitar logs de Hibernate -->
+    <logger name="org.hibernate" level="ERROR" />
+
+    <!-- Appender basico de consola -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+</configuration>

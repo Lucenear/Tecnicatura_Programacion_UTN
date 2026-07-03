@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Store - Admin Pedidos</title>
+    <link rel="stylesheet" href="../../../style.css">
+    <script type="module" src="../../../main.ts"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Food<span>Store</span> <span style="font-size: 0.8rem; font-weight: 400; letter-spacing: 2px; margin-left: 0.5rem; color: #a4b0be; text-transform: uppercase;">Admin</span></div>
+        <nav>
+            <a href="../adminHome/index.html">Dashboard</a>
+            <a id="logoutButton" style="color: var(--color-primario); font-weight: 700; cursor:pointer;">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div id="app" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+        <main>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h2>Gestión de Pedidos</h2>
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <label style="font-weight: 600;">Filtrar por Estado:</label>
+                    <select id="filter-estado" style="padding: 0.5rem; border-radius: var(--radius); border: 1px solid var(--color-borde);">
+                        <option value="TODOS">Todos los pedidos</option>
+                        <option value="PENDIENTE">Pendiente</option>
+                        <option value="EN_PREPARACION">En Preparación</option>
+                        <option value="ENTREGADO">Entregado</option>
+                        <option value="CANCELADO">Cancelado</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="admin-nav" style="margin-bottom: 2rem;">
+                <a href="../adminHome/index.html" class="btn btn-back">Volver al Dashboard</a>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Forma de Pago</th>
+                            <th>Detalle de Productos</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acciones (Cambiar Estado)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Food Store Admin.</p>
+    </footer>
+
+    <script type="module" src="./main.ts"></script>
+</body>
+</html>

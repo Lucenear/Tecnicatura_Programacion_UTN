@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Store - Detalle del Producto</title>
+    <link rel="stylesheet" href="../../../style.css">
+    <style>
+        .detail-container {
+            display: flex;
+            gap: 3rem;
+            background: var(--color-glass);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            margin-top: 2rem;
+        }
+        .detail-img {
+            flex: 1;
+            max-width: 500px;
+        }
+        .detail-img img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        .detail-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .detail-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-texto);
+        }
+        .detail-info .precio {
+            font-size: 2rem;
+            color: var(--color-primario);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .detail-info .desc {
+            font-size: 1.1rem;
+            color: #636e72;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+        .detail-info .stock {
+            margin-bottom: 2rem;
+            font-weight: 500;
+            color: #2d3436;
+        }
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .quantity-selector button {
+            padding: 0.5rem 1rem;
+            font-size: 1.2rem;
+        }
+        .quantity-selector input {
+            width: 80px;
+            text-align: center;
+            font-size: 1.2rem;
+            -moz-appearance: textfield;
+        }
+        .quantity-selector input::-webkit-outer-spin-button,
+        .quantity-selector input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+    <script type="module" src="../../../main.ts"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Food<span>Store</span></div>
+        <nav id="store-nav">
+            <a href="../home/index.html">Catálogo</a>
+            <a href="../../client/orders/index.html" id="link-orders">Mis Pedidos</a>
+            <a href="../cart/index.html" id="link-cart">Carrito <span id="cart-count" class="badge ENTREGADO" style="display:none; margin-left: 5px;">0</span></a>
+            <a id="logoutButton" style="color: var(--color-primario); font-weight: 700; cursor:pointer;">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div id="app" style="max-width: 1200px; margin: 0 auto; width: 100%;">
+        <main>
+            <div style="margin-bottom: 2rem;">
+                <a href="../home/index.html" class="btn btn-back">Volver al catálogo</a>
+            </div>
+            <div id="product-detail" class="detail-container">
+                <!-- Loaded dynamically -->
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Food Store. Todos los derechos reservados.</p>
+    </footer>
+
+    <script type="module" src="./main.ts"></script>
+</body>
+</html>
