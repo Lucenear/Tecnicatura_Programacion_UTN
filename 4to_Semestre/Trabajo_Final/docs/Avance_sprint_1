@@ -1,0 +1,56 @@
+Resumen del Sprint 1
+
+Infraestructura y Setup Inicial:
+
+1. Base de Datos (Supabase)
+
+* Creamos la instancia de PostgreSQL.
+* Armamos el script inicial creando las tablas de categoria (con datos iniciales) y usuario.
+* Configuramos las políticas de seguridad (RLS) para proteger los datos.
+* Creamos un trigger en la base de datos para que cada vez que alguien se loguea por primera vez, su perfil se guarde automáticamente en nuestra tabla pública.
+* Dejamos listo el bucket de almacenamiento (storage) llamado especialistas_docs para las futuras imágenes.
+
+2. Autenticación (Google Cloud Console + Supabase)
+
+* Creamos el proyecto en Google Cloud y configuramos la pantalla de consentimiento de OAuth.
+* Generamos las credenciales (Client ID y Client Secret) y las enlazamos a Supabase para habilitar el inicio de sesión con Google.
+* Ajustamos las URLs de redirección (tanto para entorno local como producción).
+
+3. Frontend (Vercel)
+
+* Conectamos el repositorio de GitHub con Vercel para despliegues automáticos.
+* Solucionamos conflictos de validación de código que trababan el build.
+* Corregimos un problema de Git anidado en el front y arreglamos el nombre de la carpeta raíz para que Vercel pueda compilar los serverless functions sin errores.
+
+4. Backend (VPS + Docker)
+
+* Escribimos el Dockerfile optimizado (Node 22) para construir el servidor.
+* Armamos el docker-compose.yml para gestionar el despliegue automático del contenedor, exponiendo el puerto 4000.
+
+5. DNS y Redes (Cloudflare)
+
+* Creamos el subdominio fixya.sierrascode.com apuntándolo a Vercel mediante CNAME.
+* Implementamos seguridad para el Backend: en lugar de abrir puertos públicos en la VPS, configuramos un túnel de Zero Trust en Cloudflare que enruta api.fixya.sierrascode.com de forma segura y directa hacia el contenedor Docker.
+
+
+Obstaculos tecnicos que enfrentamos:
+
+1. Problemas de validación de código (Linting)
+
+* Problema: Vercel cancelaba el despliegue a pesar de que el código era correcto. Esto se debía a que su analizador eslint detectó algunos errores de formato (comillas mal insertadas en un texto y un comentario mal posicionado).
+* Solución: Corregimos los detalles de sintaxis en los archivos correspondientes para cumplir los requisitos de Vercel.
+
+2. Error en nombres de funciones serverless
+
+* Problema: Vercel fallaba justo al final del deployment indicando un nombre inválido, apuntando a la carpeta 'Trabajo Final'.
+* Solución: Renombramos la carpeta a 'Trabajo_Final' en el repositorio y actualizamos la ruta en la configuración de Vercel.
+
+3. Repositorio Git
+
+* Problema: Al intentar subir los cambios a GitHub, nos dimos cuenta de que la herramienta que crea los proyectos de Next.js había generado una carpeta oculta .git dentro del frontend.
+* Solución: Borramos esa carpeta .git interna, limpiamos el caché del repositorio principal y volvimos a subir los archivos correctamente.
+
+5. Redirección de Login Errónea
+
+* Problema: Al probar el login de Google en la web, el sistema nos devolvía a localhost:3000 en lugar de dejarnos en la página real.
+* Solución: Fuimos a la configuración de Autenticación en Supabase y cambiamos la url principal por el dominio en producción, dejando localhost solo como ruta de apoyo para desarrollo.
