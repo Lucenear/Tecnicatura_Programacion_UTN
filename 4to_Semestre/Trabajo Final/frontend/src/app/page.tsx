@@ -40,7 +40,7 @@ export default function Home() {
                 <Search className="h-8 w-8 text-blue-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3">1. Buscá tu problema</h3>
-              <p className="text-slate-600">"Tengo una pileta tapada" o "El enchufe hace chispas". Contanos qué te pasa.</p>
+              <p className="text-slate-600">&quot;Tengo una pileta tapada&quot; o &quot;El enchufe hace chispas&quot;. Contanos qué te pasa.</p>
             </div>
             <div className="flex flex-col items-center text-center p-6 rounded-2xl bg-slate-50">
               <div className="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center mb-6">

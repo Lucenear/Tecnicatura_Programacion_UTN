@@ -23,7 +23,7 @@ export function Header() {
                 <span className="text-sm font-medium text-slate-700">
                   {user.user_metadata?.full_name || user.email}
                 </span>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+
                 {user.user_metadata?.avatar_url && (
                   <img
                     src={user.user_metadata.avatar_url}
