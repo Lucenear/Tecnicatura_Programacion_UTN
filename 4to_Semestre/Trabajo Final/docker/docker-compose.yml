@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  fixya-backend:
+    build: 
+      context: ../backend
+      dockerfile: ../docker/Dockerfile
+    container_name: fixya-backend
+    restart: always
+    ports:
+      - "4000:4000"
+    env_file:
+      - ../backend/.env
+    environment:
+      - NODE_ENV=production
+    networks:
+      - fixya-network
+
+networks:
+  fixya-network:
+    driver: bridge
