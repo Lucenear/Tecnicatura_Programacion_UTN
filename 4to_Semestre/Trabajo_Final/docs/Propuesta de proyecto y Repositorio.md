@@ -10,43 +10,43 @@ Comisión: M2026-13
 Grupo: 132  
 Repositorio GitHub: [Trabajo Práctico Final](https://github.com/Lucenear/Tecnicatura_Programacion_UTN/tree/main/4to_Semestre/Trabajo_Final "https://github.com/Lucenear/Tecnicatura_Programacion_UTN/tree/main/4to_Semestre/Trabajo_Final")  
 
-### 1. Identificación de problemática y propuesta de solución 1.
-### 1.1 Contexto claro y estado del proceso 1.1
+### 1. Identificación de problemática y propuesta de solución
+### 1.1 Contexto claro y estado del proceso
 En la actualidad, los usuarios enfrentan problemas cotidianos en sus hogares, oficios, tecnología y educación (por ejemplo, una pérdida de agua, un enchufe que no funciona, dudas con una materia escolar).  
 
 Estado actual: El usuario busca en internet (información dispersa y no curada), pregunta en redes sociales (depende de la disponibilidad de terceros) o contrata a un profesional "a ciegas" (sin conocer su reputación real, generando desconfianza y posibles sobreprecios).  
 
 Conclusión del relevamiento: Existe una brecha entre el conocimiento técnico especializado y el usuario común, lo que genera pérdida de tiempo, dinero e inseguridad.  
 
-### 1.2 Análisis de la Problemática (Actores y Flujo) 1.2
+### 1.2 Análisis de la Problemática (Actores y Flujo)
 - Usuario final: Necesita una respuesta rápida, ver tutoriales en video confiables y, si no puede resolverlo, contactar a alguien de confianza.  
 
 - Especialista (plomero, electricista, docente): Necesita visibilidad, clientes calificados y construir reputación sin gastar en marketing.  
 
 - Empresa (administrador): Necesita generar una plataforma útil, blindarse legalmente y crear un modelo de negocio escalable.  
 
-### 1.3 Propuesta de Solución Tecnológica 1.3
+### 1.3 Propuesta de Solución Tecnológica
 Desarrollar una Web App Responsive que funcione como un ecosistema de resolución de problemas, estructurada en dos niveles de entrega para garantizar la viabilidad temporal:  
 
 Nivel 1 (Core Garantizado - MVP Base): Un motor de búsqueda inteligente que conecta directamente con la API de YouTube para mostrar los 3 mejores videos tutoriales basados en la consulta del usuario, junto con un directorio de Especialistas verificados manualmente y ordenados por reputación.  
 
 Nivel 2 (Ampliación - MVP con IA): Integración de un Asistente de IA (API de Ollama) que actúe como el "cerebro" del sistema para probar la conexión y funcionamiento. La IA procesará la consulta para generar un diagnóstico paso a paso, extraer las palabras clave para la búsqueda de YouTube y clasificar la categoría para sugerir los especialistas más adecuados.  
 
-### 1.4 Validación de la Solución 1.4
+### 1.4 Validación de la Solución
 Eficacia (Lograr el objetivo): El usuario siempre obtendrá videos tutoriales y opciones de contacto humano, independientemente de si la IA está integrada o no en esa instancia.  
 
 Eficiencia (Uso óptimo de recursos): Automatiza la curación de contenido (vía API de YouTube) y la conexión de ofertas y demandas (Marketplace), reduciendo el tiempo de búsqueda a segundos.  
 
-### 2. Análisis de la Problemática (Actores y Flujo) 2.
+### 2. Análisis de la Problemática (Actores y Flujo)
 En lo que respecta al alcance del desarrollo, como primer MVP desarrollaremos un modelo de App sin la incorporación de IA.  
  Con base en los avances que se vayan realizando en el desarrollo, se evaluará la posibilidad de añadir la funcionalidad de IA como primer acercamiento a las dudas y consultas del usuario.  
 
-### 2.1 Actores del Sistema 2.1
+### 2.1 Actores del Sistema
 - Usuario registrado: Puede usar el buscador y contactar especialistas.  
 - Especialista: Puede postular su perfil.  
 - Administrador: Valida perfiles y gestiona categorías.  
 
-### 2.2 Casos de uso 2.2
+### 2.2 Casos de uso
 **CU-01: Consultar buscador de soluciones**  
 
 - Actor principal: Usuario registrado  
@@ -61,7 +61,7 @@ Precondiciones:
 - La API de Youtube debe estar disponible.  
 Postcondiciones:  
 - El sistema muestra al usuario 3 videos tutoriales y una lista de especialistas ordenados por reputación.  
-- Se registra la consulta en el historial del usuario.  
+- Se registra la consulta en el historial del usuario.    
 
 Flujo básico:  
 1. El usuario ingresa al módulo de búsqueda e introduce su consulta en lenguaje natural.  
@@ -225,11 +225,11 @@ Flujos alternativos:
 2. El usuario nunca contactó a ese especialista: El sistema no muestra el formulario y, opcionalmente, un mensaje indicando que solo pueden calificar usuarios que hayan contactado al especialista.  
 3. El usuario ya lo calificó: El sistema muestra la reseña existente y ofrece la opción de editarla (reemplazando la anterior).  
 
-### 3. Elección del stack tecnológico 3.
-### 3.1 Condición general y costos de cambio 3.1
+### 3. Elección del stack tecnológico
+### 3.1 Condición general y costos de cambio
 La regla básica es elegir un stack que el equipo conozca bien para minimizar el costo de aprendizaje y el costo de reprogramación. El equipo (3 desarrolladores) domina JavaScript, TypeScript, Python, SQL y NoSQL. Se priorizará la coherencia arquitectónica y la entrega de un producto funcional.  
 
-### 3.2 Stack Tecnológico Seleccionado 3.2
+### 3.2 Stack Tecnológico Seleccionado
 - Lenguaje de Cliente (Frontend): Next.js (React) + TypeScript + Tailwind CSS.  
 
 Justificación: JavaScript es nativo en navegadores. Next.js permite Server-Side Rendering (SSR), crucial para el SEO de los perfiles de especialistas. Tailwind garantiza un diseño responsive rápido (mobile-first).  
@@ -250,7 +250,7 @@ Justificación: Se requiere una estructura de base de datos fuerte y relacional 
 
 Justificación: Docker garantiza que el entorno de desarrollo sea idéntico al de producción. Cloudflare provee SSL automático, CDN y protección DDoS gratuita.  
 
-### 3.3 Arquitectura del Sistema 3.3
+### 3.3 Arquitectura del Sistema
 El sistema seguirá una arquitectura orientada a servicios externos, desplegada en la nube:  
 1. El usuario accede a www.fixya.com (protegido por Cloudflare Proxy).  
 2. Cloudflare enruta el tráfico HTTPS al VPS en la nube.  
@@ -261,8 +261,8 @@ El sistema seguirá una arquitectura orientada a servicios externos, desplegada 
 - Consulta a Supabase para obtener los especialistas.  
 - Devuelve todo el paquete de datos al Frontend para su renderizado.  
 
-### 4. Propuesta y viabilidad 4.
-### 4.1 Definición formal de la propuesta 4.1
+### 4. Propuesta y viabilidad
+### 4.1 Definición formal de la propuesta
 "FixYa" es una plataforma web responsive que centraliza la resolución de problemas cotidianos mediante la curación inteligente de videos tutoriales (vía Youtube API) y la conexión con un directorio de especialistas verificados manualmente.  
 
 **Alcance del MVP (Core garantizado):** Búsqueda de videos, registro con Google, directorio de especialistas, sistema de reseñas, panel de admin.  
@@ -271,23 +271,23 @@ El sistema seguirá una arquitectura orientada a servicios externos, desplegada 
 
 **Limitaciones:** No procesa pagos (el acuerdo económico es exclusivamente entre las partes). No reemplaza consejo médico, legal o de alta tensión.  
 
-### 4.2 Evaluación de viabilidad 4.2
+### 4.2 Evaluación de viabilidad
 **Viabilidad Técnica (alta):** El equipo domina el stack seleccionado (TS/Node/Postgres). La dependencia de APIs externas (Youtube) es estándar en la industria y está ampliamente documentada.  
 
 **Viabilidad Temporal (alta):** El plazo es de 2 meses (4 sprints de 15 días). La estrategia de "MVP escalonado" garantiza que, si surge un imprevisto con la integración de la IA, el producto base (Videos + Especialistas) estará 100% funcional y presentable.  
 
 **Viabilidad Operativa (alta): **La validación manual de especialistas (CU-05) es perfectamente operable para un volumen inicial, sin requerir inversión en APIs de verificación de identidad.  
 
-### 4.3 Análisis FODA 4.3
+### 4.3 Análisis FODA
 **Fortalezas:** Stack coherente y conocido por el equipo. Arquitectura en la nube robusta. Estrategia de MVP escalonado que mitiga el riesgo de no llegar con la IA.  
 
 **Debilidades:** Dependencia de APIs de terceros (Youtube y VPS) para las funcionalidades principales.  
 
 **Oportunidades:** Crecimiento del mercado "Hágalo usted mismo". Los especialistas buscan alternativas orgánicas a las redes sociales para conseguir clientes.  
 
-**Amenazas: **Cambios en los términos de servicio, cuotas o costos de las APIs externas. Competencia de marketplaces generalistas.  
+**Amenazas:**Cambios en los términos de servicio, cuotas o costos de las APIs externas. Competencia de marketplaces generalistas.  
 
-### 4.4 Identificación de riesgos y mitigaciones 4.4
+### 4.4 Identificación de riesgos y mitigaciones
 Para garantizar la viabilidad del proyecto, se identificaron los principales riesgos que podrían afectar el desarrollo, el despliegue o la operación de "FixYa", junto con sus respectivos planes de mitigación.  
 
 **Riesgo 1: No llegar a integrar la Inteligencia Artificial a tiempo.**  
@@ -310,8 +310,8 @@ Este riesgo tiene un alto impacto. Si un especialista registrado en la plataform
 
 Este riesgo tiene un impacto medio. Dado que toda la infraestructura depende de servicios en la nube (VPS, base de datos gestionada, APIs externas), una caída del proveedor podría dejar la plataforma inaccesible. El plan de mitigación incluye tres medidas. Primero, el uso de Docker en el VPS con la política de reinicio automático (restart: always), que garantiza que los contenedores se recuperen solos ante fallos menores. Segundo, la configuración de backups diarios automáticos de la base de datos Supabase y/o en la VPS, almacenados en un disco separado, para permitir la recuperación de datos en caso de pérdida. Tercero, la protección de Cloudflare como capa de defensa contra ataques DDoS y como CDN que puede servir una página de mantenimiento estática si el servidor de origen no responde.  
 
-### 5. Plan de trabajo (metodología Scrum - 4 Sprints) 5.
-### 5.1 Arquitectura por capas 5.1
+### 5. Plan de trabajo (metodología Scrum - 4 Sprints)
+### 5.1 Arquitectura por capas
 Antes de detallar los sprints, es fundamental definir cómo se organiza el desarrollo en capas técnicas, ya que cada sprint tendrá entregas paralelas en cada una de ellas:  
 
 **Frontend (Next.js + TypeScript + Tailwind):** Capa de presentación. Responsable de la UI/UX, el renderizado SSR para SEO, y la interacción con el usuario final. Se desplegará en Vercel (o en la VPS).  
@@ -322,7 +322,7 @@ Antes de detallar los sprints, es fundamental definir cómo se organiza el desar
 
 **Servicios externos en la nube:** API de Youtube Data(búsqueda de videos) y API de Ollama (IA).  
 
-### 5.2 Detalle de sprints 5.2
+### 5.2 Detalle de sprints
 **SPRINT 1 (Días 1-15): **Fundación, Autenticación e Infraestructura en la Nube  
 
 **Objetivo:** Tener la arquitectura base funcionando en la nube, con autenticación operativa y base de datos inicial.  
@@ -434,7 +434,7 @@ Antes de detallar los sprints, es fundamental definir cómo se organiza el desar
 
 **Entregable del Sprint:** Producto completo desplegado en producción, con sistema de reseñas funcionando, IA integrada (si se alcanzó el ideal), y toda la documentación legal y técnica lista para la presentación.  
 
-### 5.3 Resumen visual del plan 5.3
+### 5.3 Resumen visual del plan
 | | | | |  
 |-|-|-|-|  
 | **Sprint** | **Foco principal** | **Casos de Uso** | **Entregables** |   
