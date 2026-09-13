@@ -3,9 +3,8 @@ import { requireAuth } from '../middlewares/authMiddleware.js';
 
 const router = Router();
 
-// Endpoint protegido: Devuelve la info del usuario basándose en su token JWT
+// Endpoint devuelve la info del usuario en base a su JWT
 router.get('/me', requireAuth, (req, res) => {
-  // Agregaremos los tipos correctos más adelante, por ahora usamos any
   const user = (req as any).user;
   
   if (!user) {
