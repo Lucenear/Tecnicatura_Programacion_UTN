@@ -31,6 +31,14 @@ export function Header() {
                     className="h-8 w-8 rounded-full"
                   />
                 )}
+                
+                <Link href="/quiero-ser-especialista" className="text-sm font-medium text-blue-600 hover:underline">
+                  Ser Especialista
+                </Link>
+                <Link href="/admin" className="text-sm font-medium text-slate-500 hover:underline">
+                  Panel Admin
+                </Link>
+
                 <Button variant="ghost" size="sm" onClick={signOut}>
                   Cerrar sesión
                 </Button>
