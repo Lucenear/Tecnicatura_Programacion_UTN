@@ -25,9 +25,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-      setLoading(false);
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) {
+          console.error("Auth session error:", error);
+        }
+        setUser(session?.user ?? null);
+      } catch (err) {
+        console.error("Exception getting session:", err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     getSession();
@@ -44,12 +52,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [supabase.auth]);
 
   const signInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+      if (error) {
+        alert("Error de Supabase: " + error.message);
+      }
+    } catch (err: any) {
+      alert("Excepción de login: " + err.message);
+    }
   };
 
   const signOut = async () => {
