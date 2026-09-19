@@ -1,0 +1,75 @@
+POST http://localhost:8000/proveedores/
+Content-Type: application/json
+
+{
+  "codigo": "PRV-01",
+  "razon_social": "Proveedor Uno SA",
+  "cuit": "30111111111",
+  "email": "contacto@prov1.com",
+  "telefono": "1122334455"
+}
+
+###
+
+POST http://localhost:8000/proveedores/
+Content-Type: application/json
+
+{
+  "codigo": "PRV-01",
+  "razon_social": "Proveedor Dos",
+  "cuit": "30222222222"
+}
+
+###
+
+POST http://localhost:8000/proveedores/
+Content-Type: application/json
+
+{
+  "codigo": "PRV-02",
+  "razon_social": "Prov",
+  "cuit": "301"
+}
+
+###
+
+GET http://localhost:8000/proveedores/
+
+###
+
+GET http://localhost:8000/proveedores/1
+
+###
+
+GET http://localhost:8000/proveedores/999
+
+###
+
+PUT http://localhost:8000/proveedores/1
+Content-Type: application/json
+
+{
+  "razon_social": "Proveedor Uno Modificado SA",
+  "telefono": "000000000"
+}
+
+###
+
+PUT http://localhost:8000/proveedores/999
+Content-Type: application/json
+
+{
+  "razon_social": "No existe"
+}
+
+###
+
+PUT http://localhost:8000/proveedores/1/desactivar
+
+###
+
+PUT http://localhost:8000/proveedores/1/desactivar
+
+###
+
+PUT http://localhost:8000/proveedores/999/desactivar
