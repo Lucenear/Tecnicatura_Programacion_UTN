@@ -48,13 +48,27 @@ La elección del stack prioriza la coherencia, el conocimiento del equipo y la v
 
 ---
 
+## 📚 Documentación de Entrega
+A continuación se listan los documentos solicitados para la revisión del proyecto:
+
+* 🏗️ **[Arquitectura del Proyecto](./docs/Arquitectura.md):** Arquitectura en capas, diagrama de secuencia, casos de uso e infraestructura.
+* 🗄️ **[Diseño de Base de Datos](./docs/BaseDeDatos.md):** Diagrama Entidad-Relación (DER) y Reglas de Negocio (RLS).
+* 🧩 **[Listado de Módulos](./docs/Modulos.md):** Descripción y diagrama de los módulos del sistema.
+* 💾 **[Scripts de Base de Datos](./database/schema_unificado.sql):** Código SQL con la creación de tablas, triggers y políticas.
+
+---
+
 ## 📂 Estructura del Repositorio  
-El repositorio estará organizado para separar claramente la documentación académica del código fuente:
+El repositorio está organizado para separar claramente la documentación académica del código fuente, cumpliendo estrictamente con los lineamientos de la entrega:
 
 ```text
 ├── /docs                 # Documentación formal del TIF
-│   └── 01 - Propuesta de proyecto y Repositorio.pdf # Documento principal de la propuesta
+│   ├── Arquitectura.md   # Arquitectura en capas, diagrama de secuencia y casos de uso
+│   ├── BaseDeDatos.md    # Diseño completo de la Base de Datos (DER y Reglas de Negocio)
+│   └── Modulos.md        # Listado de módulos y descripción
 ├── /frontend             # Código fuente del cliente (Next.js + Tailwind)
-├── /backend              # Código fuente del servidor (Node.js + Express)
-├── /docker               # Configuración de contenedores (docker-compose.yml para VPS)
+├── /backend              # Código fuente del servidor BFF (Node.js + Express)
+├── /database             # Scripts SQL (Schema y datos iniciales)
+├── /docker               # Configuración de contenedores (VPS)
 └── README.md
+```
