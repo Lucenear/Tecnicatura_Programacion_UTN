@@ -38,87 +38,7 @@ flowchart TD
 
 ---
 
-## 2. Diagrama de Modulos
-
-El sistema se divide en cuatro modulos que agrupan las funcionalidades segun el flujo del usuario.
-
-```mermaid
-flowchart LR
-    Usuario((Usuario))
-    Admin((Administrador))
-
-    subgraph Modulos [Modulos FixYa]
-        M1[Modulo de Autenticacion]
-        M2[Modulo de Especialistas]
-        M3[Modulo de Busqueda y Curaduria]
-        M4[Modulo de Administracion]
-    end
-
-    Usuario -->|Inicia Sesion| M1
-    Usuario -->|Se Postula| M2
-    Usuario -->|Busca Problemas| M3
-    
-    Admin -->|Revisa Postulaciones| M4
-    
-    M2 -.->|Requiere Aprobacion| M4
-    M4 -.->|Activa Especialista| M2
-    M3 -.->|Muestra Especialistas Activos| M2
-```
-
-### Detalle de Modulos:
-1.  **Modulo de Autenticacion:** Gestiona el inicio y cierre de sesion mediante Google OAuth. Sincroniza automaticamente los datos de Google con la tabla publica de usuarios.
-2.  **Modulo de Especialistas:** Permite a los usuarios postularse como profesionales. Carga datos de contacto, rubro y archivos respaldatorios como DNI y certificados.
-3.  **Modulo de Busqueda y Curaduria (Sprint 3):** Permite al usuario buscar soluciones, interactua con la API de YouTube para obtener tutoriales y sugiere a los especialistas aprobados de la zona.
-4.  **Modulo de Administracion:** Panel privado para moderadores. Permite visualizar las postulaciones pendientes, revisar los documentos adjuntos y aprobar o rechazar a los profesionales.
-
----
-
-## 3. Modelo de Base de Datos (ERD)
-
-El esquema relacional garantiza la integridad referencial y permite la consulta de los especialistas aprobados por categoria.
-
-```mermaid
-erDiagram
-    USUARIO {
-        uuid id PK
-        string email
-        string nombre
-        string avatar_url
-        boolean es_admin
-        timestamp created_at
-    }
-
-    CATEGORIA {
-        integer id PK
-        string nombre
-        string descripcion
-    }
-
-    ESPECIALISTA {
-        uuid id PK "Referencia a USUARIO.id"
-        integer id_categoria FK
-        string zona
-        text descripcion
-        string telefono
-        string estado "Pendiente, Aprobado, Rechazado"
-        string dni_url
-        string certificado_url
-        text motivo_rechazo
-        timestamp created_at
-    }
-
-    USUARIO ||--o| ESPECIALISTA : "puede ser"
-    CATEGORIA ||--o{ ESPECIALISTA : "agrupa"
-```
-
-### Reglas de Negocio (RLS - Row Level Security):
-*   **Privacidad:** Un USUARIO solo puede modificar su propio registro de ESPECIALISTA.
-*   **Visibilidad:** El publico general solo puede leer registros de ESPECIALISTA cuyo estado sea Aprobado.
-*   **Administracion:** Solo los usuarios con es_admin = true pueden hacer operaciones de UPDATE sobre el campo estado o motivo_rechazo.
-
----
-
-## 4. Diagrama de Casos de Uso
+## 2. Diagrama de Casos de Uso
 
 Este diagrama define de forma funcional las acciones que cada tipo de actor puede realizar dentro del sistema.
 
@@ -158,7 +78,7 @@ Nota: Un Usuario Logueado hereda la capacidad de interactuar con el sistema mas 
 
 ---
 
-## 5. Diagrama de Secuencia: Postulacion de Especialista
+## 3. Diagrama de Secuencia: Postulacion de Especialista
 
 El siguiente diagrama ilustra el proceso donde un usuario sube su documentacion para ser especialista.
 
@@ -194,3 +114,14 @@ sequenceDiagram
 ### Justificacion Tecnica del Flujo:
 1. **Seguridad JWT:** El Frontend envia el token de sesion emitido por Supabase al BFF. El BFF valida criptograficamente el token antes de procesar archivos.
 2. **Optimizacion de Recursos:** El BFF nunca guarda los archivos fisicos de los usuarios en su propio disco duro. Los retiene en memoria RAM y los transfiere directamente a Supabase Storage. Esto garantiza que el servidor Node.js no se quede sin espacio.
+
+---
+
+## 4. Infraestructura y Despliegue
+
+Todo proyecto de software profesional requiere una estrategia solida de despliegue y control de versiones. Para este trabajo practico, se implemento lo siguiente:
+
+*   **Control de Versiones:** El codigo fuente se gestiona integramente en GitHub. Esto permite llevar un historial de cambios atomicos (commits) y facilita la integracion continua (CI/CD).
+*   **Despliegue del Frontend:** La aplicacion Next.js esta vinculada directamente a Vercel. Cada vez que se sube codigo a la rama principal de GitHub, Vercel compila y despliega la aplicacion automaticamente en una red global (CDN).
+*   **Despliegue del Backend (BFF):** El servidor Node.js se aloja en un Servidor Privado Virtual (VPS) propio. Para exponer este servidor a internet de forma segura sin abrir puertos en el firewall, se utilizan **Tuneles de Cloudflare (Cloudflare Tunnels)**. Esto garantiza conexion cifrada de extremo a extremo y proteccion contra ataques DDoS.
+*   **Gestion de Secretos:** Ninguna clave de API (Supabase, YouTube) esta hardcodeada en el codigo. Se utilizan variables de entorno (`.env.local`) tanto en desarrollo como en los servidores de produccion para garantizar la maxima seguridad.
