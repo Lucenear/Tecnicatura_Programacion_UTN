@@ -43,7 +43,7 @@ export default function AdminPage() {
       
       if (!token) return;
 
-      const API_URL = process.env.NEXT_PUBLIC_BFF_URL || 'http://localhost:4000';
+      const API_URL = process.env.NEXT_PUBLIC_BFF_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
       const res = await fetch(`${API_URL}/api/admin/especialistas/v1/pendientes`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -85,7 +85,7 @@ export default function AdminPage() {
       const { data: { session } } = await supabase.auth.getSession();
       const token = session?.access_token;
       
-      const API_URL = process.env.NEXT_PUBLIC_BFF_URL || 'http://localhost:4000';
+      const API_URL = process.env.NEXT_PUBLIC_BFF_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
       const res = await fetch(`${API_URL}/api/admin/especialistas/v1/${id}/estado`, {
         method: 'PUT',
         headers: { 
@@ -109,11 +109,19 @@ export default function AdminPage() {
   if (loading || isLoading) return <div className="p-8">Cargando panel...</div>;
 
   if (error) {
+    const isPermissionError = error.toLowerCase().includes('permisos');
     return (
       <div className="max-w-4xl mx-auto py-12 px-4">
         <div className="bg-red-50 text-red-600 p-6 rounded-xl border border-red-200">
-          <h2 className="text-xl font-bold mb-2">Acceso Denegado</h2>
+          <h2 className="text-xl font-bold mb-2">
+            {isPermissionError ? 'Acceso Denegado' : 'Error de Conexion con el Servidor'}
+          </h2>
           <p>{error}</p>
+          {!isPermissionError && (
+            <p className="mt-2 text-sm text-slate-600">
+              No se pudo establecer comunicacion con el backend. Verifica que el servidor este en ejecucion o que la variable de entorno NEXT_PUBLIC_BFF_URL este configurada.
+            </p>
+          )}
         </div>
       </div>
     );
