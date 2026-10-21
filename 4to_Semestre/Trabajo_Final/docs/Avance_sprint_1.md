@@ -30,7 +30,7 @@
 ### 5. DNS y Redes (Cloudflare)
 
 - Creamos el subdominio fixya.sierrascode.com apuntándolo a Vercel mediante CNAME.
-- Implementamos seguridad para el Backend: en lugar de abrir puertos públicos en la VPS, configuramos un túnel de Zero Trust en Cloudflare que enruta api.fixya.sierrascode.com de forma segura y directa hacia el contenedor Docker.
+- Implementamos seguridad para el Backend: en lugar de abrir puertos públicos en la VPS, configuramos un túnel de Zero Trust en Cloudflare que enruta api-fixya.sierrascode.com de forma segura y directa hacia el contenedor Docker.
 
 
 ## Obstáculos técnicos que enfrentamos

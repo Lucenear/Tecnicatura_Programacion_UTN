@@ -12,7 +12,7 @@ Este documento registra las modificaciones y adaptaciones tecnicas realizadas so
 ### 2. Seguridad en la Infraestructura (VPS y Cloudflare)
 - **Plan original:** Desplegar el Backend for Frontend (BFF) en la VPS y utilizar el Proxy de Cloudflare para el dominio.
 - **Implementacion real:** Se implemento un Tunel Zero Trust de Cloudflare (Cloudflared) en la VPS.
-- **Justificacion:** En lugar de exponer puertos publicos en la VPS (lo cual representa un riesgo de seguridad de nivel de red), el tunel crea una conexion cifrada saliente desde el contenedor Docker hacia Cloudflare. De esta forma, el backend (api.fixya.sierrascode.com) queda invisible en internet para escaneos de puertos o ataques directos.
+- **Justificacion:** En lugar de exponer puertos publicos en la VPS (lo cual representa un riesgo de seguridad de nivel de red), el tunel crea una conexion cifrada saliente desde el contenedor Docker hacia Cloudflare. De esta forma, el backend (api-fixya.sierrascode.com) queda invisible en internet para escaneos de puertos o ataques directos.
 
 ## Sprint 2: Modulo de Especialistas y Panel de Administracion
 
