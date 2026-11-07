@@ -1,0 +1,102 @@
+POST http://127.0.0.1:8000/productos
+Content-Type: application/json
+
+{
+  "nombre": "Queso Cremoso",
+  "descripcion": "Horma de 1 kg",
+  "precio": 6500.50
+}
+
+###
+
+POST http://127.0.0.1:8000/productos
+Content-Type: application/json
+
+{
+  "nombre": "Jamon Cocido",
+  "descripcion": "Feteado fino 250g",
+  "precio": 3200.00
+}
+
+###
+
+POST http://127.0.0.1:8000/productos
+Content-Type: application/json
+
+{
+  "nombre": "   ",
+  "descripcion": "Invalido",
+  "precio": 1000.00
+}
+
+###
+
+POST http://127.0.0.1:8000/productos
+Content-Type: application/json
+
+{
+  "nombre": "Pan de Campo",
+  "descripcion": "Hogaza",
+  "precio": -150.00
+}
+
+###
+
+POST http://127.0.0.1:8000/productos
+Content-Type: application/json
+
+{
+  "nombre": "queso cremoso",
+  "descripcion": "Duplicado",
+  "precio": 7000.00
+}
+
+###
+
+GET http://127.0.0.1:8000/productos
+
+###
+
+GET http://127.0.0.1:8000/productos/1
+
+###
+
+GET http://127.0.0.1:8000/productos/9999
+
+###
+
+PUT http://127.0.0.1:8000/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Queso Cremoso Primera Marca",
+  "descripcion": "Horma especial de 1 kg",
+  "precio": 6990.00
+}
+
+###
+
+PUT http://127.0.0.1:8000/productos/9999
+Content-Type: application/json
+
+{
+  "nombre": "Inexistente",
+  "precio": 500.00
+}
+
+###
+
+PUT http://127.0.0.1:8000/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Jamon Cocido"
+}
+
+###
+
+DELETE http://127.0.0.1:8000/productos/1
+
+###
+
+DELETE http://127.0.0.1:8000/productos/1

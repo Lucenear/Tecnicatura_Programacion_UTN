@@ -1,0 +1,362 @@
+{
+  "info": {
+    "_postman_id": "c1f7a28e-5d8f-43b9-a9a7-8899aabbccdd",
+    "name": "Food Store - CRUD Productos",
+    "description": "Coleccion de pruebas para la API de Food Store",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Crear Producto - Exitoso",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Queso Cremoso\",\n  \"descripcion\": \"Horma de 1 kg\",\n  \"precio\": 6500.50\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. Crear Segundo Producto - Exitoso",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Jamon Cocido\",\n  \"descripcion\": \"Feteado fino 250g\",\n  \"precio\": 3200.00\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. Error 422 - Nombre vacio",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"   \",\n  \"descripcion\": \"Invalido\",\n  \"precio\": 1000.00\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Error 422 - Precio negativo",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Pan de Campo\",\n  \"descripcion\": \"Hogaza\",\n  \"precio\": -150.00\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. Error 409 - Nombre duplicado",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"queso cremoso\",\n  \"descripcion\": \"Duplicado\",\n  \"precio\": 7000.00\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. Listar Productos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "7. Obtener Producto por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "8. Error 404 - ID no existente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos/9999",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos",
+            "9999"
+          ]
+        }
+      }
+    },
+    {
+      "name": "9. Actualizar Producto",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Queso Cremoso Primera Marca\",\n  \"descripcion\": \"Horma especial de 1 kg\",\n  \"precio\": 6990.00\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "10. Error 404 - Actualizar ID no existente",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Inexistente\",\n  \"precio\": 500.00\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos/9999",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos",
+            "9999"
+          ]
+        }
+      }
+    },
+    {
+      "name": "11. Error 409 - Actualizar con nombre duplicado",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Jamon Cocido\"\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "12. Eliminar Producto",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "13. Error 404 - Eliminar ID ya eliminado",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/productos/1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "productos",
+            "1"
+          ]
+        }
+      }
+    }
+  ]
+}
