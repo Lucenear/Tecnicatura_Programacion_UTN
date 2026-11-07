@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 // Inicializ Supabase y usa Service Role Key. El middleware actua como verificador de tokens
 const supabaseUrl = process.env.SUPABASE_URL || '';

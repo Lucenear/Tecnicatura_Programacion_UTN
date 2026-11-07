@@ -53,7 +53,7 @@ A continuación se listan los documentos solicitados para la revisión del proye
 * 🗄️ **[Diseño de Base de Datos](./docs/BaseDeDatos.md):** Diagrama Entidad-Relación (DER) y Reglas de Negocio (RLS).
 * 🧩 **[Listado de Módulos](./docs/Modulos.md):** Descripción y diagrama de los módulos del sistema.
 * 💾 **[Scripts de Base de Datos](./database/schema_unificado.sql):** Código SQL con la creación de tablas, triggers y políticas.
-* 📋 **[Informes de Avance y Seguimiento](./docs/):** Bitácora de [Sprint 1](./docs/Avance_sprint_1.md), [Sprint 2](./docs/Avance_sprint_2.md) y [Registro de Desvíos](./docs/Desvios_plan_original.md).
+* 📋 **[Informes de Avance y Seguimiento](./docs/):** Bitácora de [Sprint 1](./docs/Avance_sprint_1.md), [Sprint 2](./docs/Avance_sprint_2.md), [Sprint 3](./docs/Avance_sprint_3.md) y [Registro de Desvíos](./docs/Desvios_plan_original.md).
 
 ---
 
@@ -67,6 +67,7 @@ El repositorio está organizado para separar claramente la documentación acadé
 │   ├── Modulos.md            # Listado de módulos y descripción
 │   ├── Avance_sprint_1.md    # Bitácora de avance y obstáculos del Sprint 1
 │   ├── Avance_sprint_2.md    # Bitácora de avance y obstáculos del Sprint 2
+│   ├── Avance_sprint_3.md    # Bitácora de avance y obstáculos del Sprint 3
 │   └── Desvios_plan_original.md # Registro de adaptaciones técnicas
 ├── /frontend                 # Código fuente del cliente (Next.js + Tailwind)
 ├── /backend                  # Código fuente del servidor BFF (Node.js + Express)

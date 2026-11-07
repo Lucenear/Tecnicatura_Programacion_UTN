@@ -85,4 +85,32 @@ router.post('/',
     }
 });
 
+router.post('/:id/contacto', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { data: esp, error } = await supabase
+      .from('especialista')
+      .select('id, telefono, estado')
+      .eq('id', id)
+      .eq('estado', 'Aprobado')
+      .single();
+
+    if (error || !esp) {
+      return res.status(404).json({ error: 'Especialista no encontrado o no disponible' });
+    }
+
+    console.log(`[Metrica] Contacto iniciado hacia especialista ${id}`);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Contacto registrado con exito',
+      telefono: esp.telefono
+    });
+  } catch (err) {
+    console.error('Error al registrar contacto de especialista:', err);
+    return res.status(500).json({ error: 'Error al procesar el contacto' });
+  }
+});
+
 export default router;

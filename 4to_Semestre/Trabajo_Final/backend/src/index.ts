@@ -1,12 +1,11 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import especialistasRoutes from './routes/especialistasRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
-
-dotenv.config();
+import buscarRoutes from './routes/buscarRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -34,6 +33,7 @@ app.use(express.json());
 app.use('/api/auth/v1', authRoutes);
 app.use('/api/especialistas/v1', especialistasRoutes);
 app.use('/api/admin/especialistas/v1', adminRoutes);
+app.use('/api/buscar/v1', buscarRoutes);
 
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
