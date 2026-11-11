@@ -3,6 +3,42 @@ import { requireAuth, requireAdmin, supabase } from '../middlewares/authMiddlewa
 
 const router = express.Router();
 
+const BUCKET_DOCS = 'especialistas_docs';
+
+async function obtenerUrlFirmada(urlOPath: string | null | undefined): Promise<string> {
+  if (!urlOPath) return '';
+
+  let storagePath = urlOPath.trim();
+  const marcadorPublico = `/object/public/${BUCKET_DOCS}/`;
+  const marcadorSign = `/object/sign/${BUCKET_DOCS}/`;
+  const marcadorBase = `/${BUCKET_DOCS}/`;
+
+  if (storagePath.includes(marcadorPublico)) {
+    storagePath = storagePath.split(marcadorPublico)[1].split('?')[0];
+  } else if (storagePath.includes(marcadorSign)) {
+    storagePath = storagePath.split(marcadorSign)[1].split('?')[0];
+  } else if (storagePath.startsWith('http://') || storagePath.startsWith('https://')) {
+    if (storagePath.includes(marcadorBase)) {
+      storagePath = storagePath.split(marcadorBase)[1].split('?')[0];
+    } else {
+      return urlOPath;
+    }
+  }
+
+  storagePath = decodeURIComponent(storagePath);
+
+  const { data, error } = await supabase.storage
+    .from(BUCKET_DOCS)
+    .createSignedUrl(storagePath, 3600);
+
+  if (error || !data?.signedUrl) {
+    console.error('Error firmando URL de documento:', error);
+    return '';
+  }
+
+  return data.signedUrl;
+}
+
 // Todas las rutas requieren auth y rol de admin
 router.use(requireAuth, requireAdmin);
 
@@ -23,7 +59,21 @@ router.get('/pendientes', async (req, res) => {
       return res.status(500).json({ error: 'Error obteniendo postulaciones' });
     }
 
-    res.status(200).json(data);
+    const pendientesFirmados = await Promise.all(
+      (data || []).map(async (item) => {
+        const [dniFirmado, certFirmado] = await Promise.all([
+          obtenerUrlFirmada(item.dni_url),
+          obtenerUrlFirmada(item.certificado_url)
+        ]);
+        return {
+          ...item,
+          dni_url: dniFirmado,
+          certificado_url: certFirmado
+        };
+      })
+    );
+
+    res.status(200).json(pendientesFirmados);
   } catch (err) {
     console.error('Error en GET /pendientes:', err);
     res.status(500).json({ error: 'Error interno del servidor' });

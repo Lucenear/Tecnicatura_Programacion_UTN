@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import { usePostulacionModal } from "@/components/especialista/PostulacionContext";
 import { Button } from "@/components/ui/Button";
 import { Wrench } from "lucide-react";
 
 export function Header() {
-  const { user, loading, signInWithGoogle, signOut } = useAuth();
+  const { user, esAdmin, loading, signInWithGoogle, signOut } = useAuth();
+  const { abrirModalPostulacion } = usePostulacionModal();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md">
@@ -32,12 +34,18 @@ export function Header() {
                   />
                 )}
                 
-                <Link href="/quiero-ser-especialista" className="text-sm font-medium text-blue-600 hover:underline">
+                <button
+                  type="button"
+                  onClick={abrirModalPostulacion}
+                  className="text-sm font-medium text-blue-600 hover:underline cursor-pointer"
+                >
                   Ser Especialista
-                </Link>
-                <Link href="/admin" className="text-sm font-medium text-slate-500 hover:underline">
-                  Panel Admin
-                </Link>
+                </button>
+                {esAdmin && (
+                  <Link href="/admin" className="text-sm font-medium text-slate-500 hover:underline">
+                    Panel Admin
+                  </Link>
+                )}
 
                 <Button variant="ghost" size="sm" onClick={signOut}>
                   Cerrar sesión

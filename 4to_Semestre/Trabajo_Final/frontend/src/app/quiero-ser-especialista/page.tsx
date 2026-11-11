@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { createClient } from '@/lib/supabase';
+import { X } from 'lucide-react';
 
 // Hardcodeo categorias por ahora
 const CATEGORIAS = [
@@ -19,6 +20,9 @@ const CATEGORIAS = [
 export default function PostulacionEspecialistaPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const descripcionId = useId();
+  const dniId = useId();
+  const certId = useId();
 
   const [idCategoria, setIdCategoria] = useState('');
   const [zona, setZona] = useState('');
@@ -80,11 +84,20 @@ export default function PostulacionEspecialistaPage() {
 
       router.push('/quiero-ser-especialista/success');
       
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setError(err.message || 'Ocurrió un error inesperado. Intenta de nuevo.');
+      const mensaje = err instanceof Error ? err.message : 'Ocurrió un error inesperado. Intenta de nuevo.';
+      setError(mensaje);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleVolver = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push('/');
     }
   };
 
@@ -93,6 +106,17 @@ export default function PostulacionEspecialistaPage() {
   return (
     <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6">
       <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
+        <div className="flex justify-end mb-2">
+          <button
+            type="button"
+            onClick={handleVolver}
+            aria-label="Cerrar formulario"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Quiero ser Especialista</h1>
           <p className="mt-2 text-slate-500">
@@ -129,17 +153,19 @@ export default function PostulacionEspecialistaPage() {
             label="Teléfono de contacto (WhatsApp) *"
             placeholder="Ej: +5493510000000"
             type="tel"
+            autoComplete="tel"
             value={telefono}
             onChange={(e) => setTelefono(e.target.value)}
             required
           />
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label htmlFor={descripcionId} className="block text-sm font-medium text-slate-700 mb-1">
               Descripción de tus servicios
             </label>
             <textarea
-              className="flex w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200"
+              id={descripcionId}
+              className="flex w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200"
               rows={4}
               placeholder="Cuéntale a los usuarios sobre tu experiencia y cómo trabajas..."
               value={descripcion}
@@ -152,10 +178,11 @@ export default function PostulacionEspecialistaPage() {
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
+                <label htmlFor={dniId} className="block text-sm font-medium text-slate-700 mb-1">
                   Foto de tu DNI (Frente y Dorso en la misma imagen) *
                 </label>
                 <input
+                  id={dniId}
                   type="file"
                   accept="image/jpeg,image/png,image/jpg"
                   onChange={(e) => setDniFile(e.target.files?.[0] || null)}
@@ -165,10 +192,11 @@ export default function PostulacionEspecialistaPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
+                <label htmlFor={certId} className="block text-sm font-medium text-slate-700 mb-1">
                   Foto de tu Certificado, Título o Matrícula *
                 </label>
                 <input
+                  id={certId}
                   type="file"
                   accept="image/jpeg,image/png,image/jpg"
                   onChange={(e) => setCertFile(e.target.files?.[0] || null)}

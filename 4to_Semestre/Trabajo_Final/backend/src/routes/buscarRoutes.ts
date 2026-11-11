@@ -1,11 +1,11 @@
 import express from 'express';
 import { clasificarConsulta } from '../services/clasificadorService.js';
 import { buscarVideosYouTube } from '../services/youtubeService.js';
-import { supabase } from '../middlewares/authMiddleware.js';
+import { requireAuth, supabase } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
   try {
     const q = (req.query.q as string || '').trim();
 
@@ -56,8 +56,7 @@ router.get('/', async (req, res) => {
   } catch (err: any) {
     console.error('Error en endpoint de búsqueda:', err);
     return res.status(500).json({ 
-      error: 'Ocurrió un error al procesar la búsqueda',
-      detalle: err.message 
+      error: 'Ocurrió un error al procesar la búsqueda'
     });
   }
 });

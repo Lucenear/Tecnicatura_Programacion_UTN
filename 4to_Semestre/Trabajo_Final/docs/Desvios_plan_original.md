@@ -38,7 +38,7 @@ Este documento registra las modificaciones y adaptaciones tecnicas realizadas so
 - **Implementacion real:** Se concentro toda la operacion en un unico endpoint GET /api/buscar/v1 que resuelve la clasificacion, los videos tutoriales y los especialistas aprobados.
 - **Justificacion:** Reduce a la mitad la cantidad de peticiones de red realizadas por el cliente, disminuye los tiempos de espera y simplifica el consumo de datos desde la interfaz de usuario.
 
-### 2. Catalogo de Respaldo para Videos Tutoriales
-- **Plan original:** La respuesta del buscador dependia de forma exclusiva de la disponibilidad de la API de YouTube Data v3.
-- **Implementacion real:** Se incorporo un servicio con videos tutoriales de respaldo organizados por categoria.
-- **Justificacion:** Mantiene la aplicacion operativa aun si se supera el limite de cuota diaria gratuita o si existen problemas temporales de conexion con la API externa, asegurando que el usuario siempre reciba material de orientacion.
+### 2. Contacto directo desde los resultados de busqueda
+- **Plan original:** Previa separar el listado publico de especialistas con filtros laterales (/especialistas) y la vista de perfil individual (/especialistas/:id), ademas de guardar el historial de busquedas del usuario.
+- **Implementacion real:** Se mostraron las tarjetas completas de los especialistas aprobados (con foto, zona, descripcion, calificacion y boton de WhatsApp) directamente en la pantalla de resultados (/buscar) debajo de los videos tutoriales, omitiendo por ahora el historial de busquedas.
+- **Justificacion:** Reduce pasos de navegacion para que el usuario logueado encuentre ayuda mas rapido en una sola vista y prioriza el alcance principal del MVP Base al trabajar un solo integrante en el desarrollo.

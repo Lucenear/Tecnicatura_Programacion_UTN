@@ -61,8 +61,6 @@ flowchart LR
     end
 
     %% Relaciones
-    Visitante --> UC1
-    Visitante --> UC2
     Visitante --> UC4
 
     User --> UC1
@@ -74,7 +72,7 @@ flowchart LR
     Admin --> UC7
 ```
 
-Nota: Un Usuario Logueado hereda la capacidad de interactuar con el sistema mas a fondo que un visitante, incluyendo la postulacion y el contacto por WhatsApp.
+Nota: Un visitante debe iniciar sesion con Google antes de usar el buscador de soluciones, ver los tutoriales en la plataforma, contactar especialistas por WhatsApp o postular su perfil.
 
 ---
 
@@ -98,17 +96,17 @@ sequenceDiagram
     activate B
     B->>B: Middleware requireAuth verifica JWT
     B->>B: Multer procesa imagenes en memoria RAM
-    B->>S: Sube imagen DNI
-    S-->>B: Devuelve DNI Public URL
-    B->>S: Sube imagen Certificado
-    S-->>B: Devuelve Certificado Public URL
+    B->>S: Sube imagen DNI (bucket privado)
+    S-->>B: Confirma archivo guardado (path interno)
+    B->>S: Sube imagen Certificado (bucket privado)
+    S-->>B: Confirma archivo guardado (path interno)
     
-    B->>DB: INSERT en tabla especialista
-    DB-->>B: Confirmacion de fila insertada
+    B->>DB: INSERT/UPDATE en tabla especialista
+    DB-->>B: Confirmacion de fila guardada
     B-->>F: HTTP 201 Created
     deactivate B
     
-    F->>U: Redirige a pantalla de exito (/success)
+    F->>U: Muestra confirmacion dentro del modal in-page
 ```
 
 ### Justificacion Tecnica del Flujo:
@@ -124,4 +122,4 @@ Todo proyecto de software profesional requiere una estrategia solida de desplieg
 *   **Control de Versiones:** El codigo fuente se gestiona integramente en GitHub. Esto permite llevar un historial de cambios atomicos (commits) y facilita la integracion continua (CI/CD).
 *   **Despliegue del Frontend:** La aplicacion Next.js esta vinculada directamente a Vercel. Cada vez que se sube codigo a la rama principal de GitHub, Vercel compila y despliega la aplicacion automaticamente en una red global (CDN).
 *   **Despliegue del Backend (BFF):** El servidor Node.js se aloja en un Servidor Privado Virtual (VPS) propio. Para exponer este servidor a internet de forma segura sin abrir puertos en el firewall, se utilizan **Tuneles de Cloudflare (Cloudflare Tunnels)**. Esto garantiza conexion cifrada de extremo a extremo y proteccion contra ataques DDoS.
-*   **Gestion de Secretos:** Ninguna clave de API (Supabase, YouTube) esta hardcodeada en el codigo. Se utilizan variables de entorno (`.env.local`) tanto en desarrollo como en los servidores de produccion para garantizar la maxima seguridad.
+*   **Gestion de Secretos:** Ninguna clave de API (Supabase, YouTube) esta hardcodeada en el codigo. Se utilizan variables de entorno (`.env` en backend, con plantilla `backend/.env.example`, y `.env.local` en frontend) tanto en desarrollo como en los servidores de produccion para garantizar la maxima seguridad.

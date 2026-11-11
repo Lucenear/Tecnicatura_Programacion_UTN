@@ -20,7 +20,8 @@ erDiagram
     }
 
     ESPECIALISTA {
-        uuid id PK "Referencia a USUARIO.id"
+        uuid id PK
+        uuid id_usuario FK
         integer id_categoria FK
         string zona
         text descripcion
@@ -29,14 +30,25 @@ erDiagram
         string dni_url
         string certificado_url
         text motivo_rechazo
+        decimal promedio_estrellas
+        integer total_resenas
+        timestamp created_at
+    }
+
+    CONTACTO {
+        uuid id PK
+        uuid id_usuario FK
+        uuid id_especialista FK
         timestamp created_at
     }
 
     USUARIO ||--o| ESPECIALISTA : "puede ser"
     CATEGORIA ||--o{ ESPECIALISTA : "agrupa"
+    USUARIO ||--o{ CONTACTO : "realiza"
+    ESPECIALISTA ||--o{ CONTACTO : "recibe"
 ```
 
 ## Reglas de Negocio (RLS - Row Level Security):
-*   **Privacidad:** Un USUARIO solo puede modificar su propio registro de ESPECIALISTA.
-*   **Visibilidad:** El publico general solo puede leer registros de ESPECIALISTA cuyo estado sea Aprobado.
-*   **Administracion:** Solo los usuarios con es_admin = true pueden hacer operaciones de UPDATE sobre el campo estado o motivo_rechazo.
+*   **Usuarios y rol Admin:** Cada USUARIO autenticado solo puede leer y editar sus propios datos basicos (`nombre`, `avatar_url`). La columna `es_admin` queda protegida tanto por permisos de columna (`GRANT UPDATE (nombre, avatar_url)`) como por clausula `WITH CHECK` para impedir auto-asignacion de privilegios de administrador.
+*   **Especialistas y documentos:** Toda lectura publica, postulacion y aprobacion de ESPECIALISTA pasa por el backend BFF (`service_role`), evitando acceso anonimo directo o auto-aprobacion desde el cliente. El bucket `especialistas_docs` es privado y solo emite URLs firmadas temporales para administradores.
+*   **Contactos:** Solo el backend BFF inserta registros en CONTACTO luego de validar que el especialista este aprobado, mientras que cada USUARIO autenticado unicamente puede consultar sus propios contactos.
