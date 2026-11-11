@@ -8,6 +8,7 @@ interface AuthContextType {
   user: User | null;
   esAdmin: boolean;
   loading: boolean;
+  adminLoading: boolean;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType>({
   user: null,
   esAdmin: false,
   loading: true,
+  adminLoading: true,
   signInWithGoogle: async () => {},
   signOut: async () => {},
 });
@@ -24,6 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [esAdmin, setEsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [adminLoading, setAdminLoading] = useState(true);
   const supabase = createClient();
 
   useEffect(() => {
@@ -63,6 +66,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!activo) return;
 
         setUser(session?.user ?? null);
+        setLoading(false);
+
         if (session?.user) {
           const admin = await verificarEsAdmin(session.user.id, session.access_token);
           if (activo) setEsAdmin(admin);
@@ -71,9 +76,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       } catch (err) {
         console.error("Exception getting session:", err);
-        if (activo) setEsAdmin(false);
+        if (activo) {
+          setEsAdmin(false);
+          setLoading(false);
+        }
       } finally {
-        if (activo) setLoading(false);
+        if (activo) setAdminLoading(false);
       }
     };
 
@@ -84,10 +92,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!activo || event === "INITIAL_SESSION") return;
         setUser(session?.user ?? null);
         if (session?.user) {
+          setAdminLoading(true);
           const admin = await verificarEsAdmin(session.user.id, session.access_token);
-          if (activo) setEsAdmin(admin);
+          if (activo) {
+            setEsAdmin(admin);
+            setAdminLoading(false);
+          }
         } else {
           setEsAdmin(false);
+          setAdminLoading(false);
         }
       }
     );
@@ -100,6 +113,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
+      const rutaActual = `${window.location.pathname}${window.location.search}`;
+      if (rutaActual.startsWith("/") && !rutaActual.startsWith("//") && rutaActual !== "/") {
+        const secureAttr = window.location.protocol === "https:" ? "; Secure" : "";
+        document.cookie = `fixya_post_login_redirect=${encodeURIComponent(rutaActual)}; Path=/; Max-Age=600; SameSite=Lax${secureAttr}`;
+      } else {
+        document.cookie = "fixya_post_login_redirect=; Path=/; Max-Age=0; SameSite=Lax";
+      }
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
@@ -121,7 +142,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, esAdmin, loading, signInWithGoogle, signOut }}>
+    <AuthContext.Provider value={{ user, esAdmin, loading, adminLoading, signInWithGoogle, signOut }}>
       {children}
     </AuthContext.Provider>
   );

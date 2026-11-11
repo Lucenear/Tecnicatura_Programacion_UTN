@@ -5,10 +5,34 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/';
+  const cookieStore = await cookies();
+  const redirectCookie = cookieStore.get('fixya_post_login_redirect')?.value;
+  let nextFromCookie = '/';
+
+  if (redirectCookie) {
+    try {
+      nextFromCookie = redirectCookie.startsWith('/')
+        ? redirectCookie
+        : decodeURIComponent(redirectCookie);
+    } catch {
+      nextFromCookie = '/';
+    }
+  }
+
+  const rawNext = searchParams.get('next') ?? nextFromCookie;
+  let safeNext = '/';
+  try {
+    const parsed = new URL(rawNext, origin);
+    if (parsed.origin === origin && rawNext.startsWith('/') && !rawNext.startsWith('//')) {
+      safeNext = `${parsed.pathname}${parsed.search}${parsed.hash}`;
+    }
+  } catch {
+    safeNext = '/';
+  }
+
+  cookieStore.delete('fixya_post_login_redirect');
 
   if (code) {
-    const cookieStore = await cookies();
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -29,7 +53,7 @@ export async function GET(request: Request) {
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`);
+      return NextResponse.redirect(`${origin}${safeNext}`);
     }
   }
 

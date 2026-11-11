@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search, Video, ShieldCheck, ArrowRight, Lock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -17,16 +17,6 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const { user, loading, signInWithGoogle } = useAuth();
-
-  useEffect(() => {
-    if (!loading && user) {
-      const pendiente = sessionStorage.getItem("fixya_post_login_redirect");
-      if (pendiente && pendiente.startsWith("/")) {
-        sessionStorage.removeItem("fixya_post_login_redirect");
-        router.replace(pendiente);
-      }
-    }
-  }, [user, loading, router]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

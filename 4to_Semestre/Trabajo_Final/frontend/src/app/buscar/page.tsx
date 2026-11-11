@@ -104,9 +104,6 @@ function ContenidoBuscar({ qParam }: { qParam: string }) {
   }, [qParam, user, authLoading, retryCount]);
 
   const handleLoginParaBuscar = async () => {
-    if (qParam.trim()) {
-      sessionStorage.setItem("fixya_post_login_redirect", `/buscar?q=${encodeURIComponent(qParam.trim())}`);
-    }
     await signInWithGoogle();
   };
 

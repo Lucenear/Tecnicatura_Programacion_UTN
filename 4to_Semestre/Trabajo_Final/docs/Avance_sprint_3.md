@@ -33,7 +33,7 @@
 ### 1. Barra de busqueda principal en Home
 
 - Actualizamos la portada (src/app/page.tsx) incorporando un formulario de busqueda directo en el centro de la pantalla y botones con sugerencias rapidas.
-- Indicamos debajo del buscador cuando el usuario no inicio sesion para que pueda ingresar con Google, y agregamos redireccion automatica hacia la consulta pendiente una vez completado el login.
+- Indicamos debajo del buscador cuando el usuario no inicio sesion para que pueda ingresar con Google, y resolvemos la redireccion post-login directo desde el servidor (/auth/callback) hacia la consulta pendiente en /buscar para evitar mostrar la portada antes de cargar los resultados.
 
 ### 2. Pagina de resultados (/buscar)
 

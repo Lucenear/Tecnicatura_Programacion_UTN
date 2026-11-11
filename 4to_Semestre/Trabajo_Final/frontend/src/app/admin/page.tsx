@@ -25,7 +25,7 @@ interface EspecialistaPendiente {
 }
 
 export default function AdminPage() {
-  const { user, esAdmin, loading } = useAuth();
+  const { user, esAdmin, loading, adminLoading } = useAuth();
   const router = useRouter();
   
   const [pendientes, setPendientes] = useState<EspecialistaPendiente[]>([]);
@@ -41,7 +41,7 @@ export default function AdminPage() {
   const [documentoAmpliado, setDocumentoAmpliado] = useState<{ titulo: string; url: string } | null>(null);
 
   useEffect(() => {
-    if (loading) {
+    if (loading || adminLoading) {
       return;
     }
 
@@ -97,7 +97,7 @@ export default function AdminPage() {
     return () => {
       activo = false;
     };
-  }, [user, esAdmin, loading, router]);
+  }, [user, esAdmin, loading, adminLoading, router]);
 
   const categoriasDisponibles = useMemo(() => {
     const nombres = Array.from(
@@ -155,7 +155,7 @@ export default function AdminPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center text-slate-600">Cargando panel...</div>;
+  if (loading || (user && adminLoading)) return <div className="p-8 text-center text-slate-600">Cargando panel...</div>;
 
   if (!user) return null;
 
