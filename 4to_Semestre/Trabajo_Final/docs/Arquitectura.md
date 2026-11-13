@@ -58,6 +58,7 @@ flowchart LR
         UC5([Postularse como Especialista])
         UC6([Revisar Postulaciones])
         UC7([Aprobar o Rechazar Perfil])
+        UC8([Calificar Especialista])
     end
 
     %% Relaciones
@@ -67,12 +68,13 @@ flowchart LR
     User --> UC2
     User --> UC3
     User --> UC5
+    User --> UC8
 
     Admin --> UC6
     Admin --> UC7
 ```
 
-Nota: Un visitante debe iniciar sesion con Google antes de usar el buscador de soluciones, ver los tutoriales en la plataforma, contactar especialistas por WhatsApp o postular su perfil.
+Nota: Un visitante debe iniciar sesion con Google antes de usar el buscador de soluciones, ver los tutoriales en la plataforma, contactar especialistas por WhatsApp, dejar reseñas o postular su perfil.
 
 ---
 

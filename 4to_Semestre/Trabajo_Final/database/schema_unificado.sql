@@ -41,6 +41,19 @@ CREATE TABLE IF NOT EXISTS public.contacto (
 
 CREATE INDEX IF NOT EXISTS idx_contacto_usuario_especialista ON public.contacto(id_usuario, id_especialista);
 
+CREATE TABLE IF NOT EXISTS public.resena (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id_usuario UUID NOT NULL REFERENCES public.usuario(id) ON DELETE CASCADE,
+    id_especialista UUID NOT NULL REFERENCES public.especialista(id) ON DELETE CASCADE,
+    estrellas INTEGER NOT NULL CHECK (estrellas >= 1 AND estrellas <= 5),
+    comentario TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+    CONSTRAINT uq_resena_usuario_especialista UNIQUE (id_usuario, id_especialista)
+);
+
+CREATE INDEX IF NOT EXISTS idx_resena_especialista ON public.resena(id_especialista);
+
 INSERT INTO public.categoria (nombre) VALUES
 ('Plomería'),
 ('Electricidad'),
@@ -71,6 +84,34 @@ CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
 
+CREATE OR REPLACE FUNCTION public.recalcular_calificacion_especialista()
+RETURNS trigger AS $$
+DECLARE
+  target_especialista UUID;
+BEGIN
+  target_especialista := COALESCE(NEW.id_especialista, OLD.id_especialista);
+
+  UPDATE public.especialista
+  SET
+    promedio_estrellas = COALESCE(
+      (SELECT ROUND(AVG(r.estrellas)::numeric, 2) FROM public.resena r WHERE r.id_especialista = target_especialista),
+      0.00
+    ),
+    total_resenas = (
+      SELECT COUNT(*) FROM public.resena r WHERE r.id_especialista = target_especialista
+    ),
+    updated_at = TIMEZONE('utc', NOW())
+  WHERE id = target_especialista;
+
+  RETURN COALESCE(NEW, OLD);
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+DROP TRIGGER IF EXISTS on_resena_changed ON public.resena;
+CREATE TRIGGER on_resena_changed
+  AFTER INSERT OR UPDATE OR DELETE ON public.resena
+  FOR EACH ROW EXECUTE PROCEDURE public.recalcular_calificacion_especialista();
+
 CREATE OR REPLACE FUNCTION public.is_admin() RETURNS BOOLEAN AS $$
   SELECT es_admin FROM public.usuario WHERE id = auth.uid() LIMIT 1;
 $$ LANGUAGE sql SECURITY DEFINER;
@@ -79,6 +120,7 @@ ALTER TABLE public.categoria ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.usuario ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.especialista ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.contacto ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.resena ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "Categorias visibles para todos" ON public.categoria;
 CREATE POLICY "Categorias visibles para todos" ON public.categoria
@@ -113,6 +155,10 @@ CREATE POLICY "Usuarios pueden ver sus propios contactos" ON public.contacto
 
 DROP POLICY IF EXISTS "Usuarios pueden registrar sus propios contactos" ON public.contacto;
 
+DROP POLICY IF EXISTS "Resenas visibles para autenticados" ON public.resena;
+CREATE POLICY "Resenas visibles para autenticados" ON public.resena
+    FOR SELECT TO authenticated USING (true);
+
 DROP POLICY IF EXISTS "Usuarios autenticados pueden subir documentos" ON storage.objects;
 
 DROP POLICY IF EXISTS "Usuarios pueden ver sus propios documentos" ON storage.objects;
@@ -131,8 +177,8 @@ GRANT USAGE ON SCHEMA public TO anon, authenticated, service_role;
 GRANT ALL ON ALL TABLES IN SCHEMA public TO service_role;
 GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO service_role;
 
-REVOKE ALL ON public.usuario, public.especialista, public.contacto FROM anon;
-REVOKE ALL ON public.usuario, public.especialista, public.contacto FROM authenticated;
+REVOKE ALL ON public.usuario, public.especialista, public.contacto, public.resena FROM anon;
+REVOKE ALL ON public.usuario, public.especialista, public.contacto, public.resena FROM authenticated;
 
 GRANT SELECT ON public.categoria TO anon, authenticated;
 GRANT SELECT ON public.usuario TO authenticated;
@@ -141,3 +187,4 @@ GRANT SELECT ON public.contacto TO authenticated;
 
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO service_role;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO service_role;
+

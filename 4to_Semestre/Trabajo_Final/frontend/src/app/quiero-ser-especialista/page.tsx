@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useId } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/Button';
@@ -17,9 +18,22 @@ const CATEGORIAS = [
   { value: '4', label: 'Tecnología' },
 ];
 
+function normalizarTelefono10(valor: string): string {
+  let digitos = valor.replace(/\D/g, '');
+  if (digitos.startsWith('549') && digitos.length >= 13) {
+    digitos = digitos.slice(3);
+  } else if (digitos.startsWith('54') && digitos.length >= 12) {
+    digitos = digitos.slice(2);
+  } else if (digitos.startsWith('0')) {
+    digitos = digitos.replace(/^0+/, '');
+  }
+  return digitos.slice(0, 10);
+}
+
 export default function PostulacionEspecialistaPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const telefonoId = useId();
   const descripcionId = useId();
   const dniId = useId();
   const certId = useId();
@@ -42,8 +56,14 @@ export default function PostulacionEspecialistaPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!idCategoria || !zona || !telefono || !dniFile || !certFile) {
+    const digitosTelefono = normalizarTelefono10(telefono);
+    if (!idCategoria || !zona || !digitosTelefono || !dniFile || !certFile) {
       setError('Por favor completa todos los campos obligatorios y sube ambos archivos.');
+      return;
+    }
+
+    if (digitosTelefono.length !== 10) {
+      setError('El número de teléfono debe tener exactamente 10 dígitos (código de área sin 0 y número sin 15).');
       return;
     }
     
@@ -52,7 +72,6 @@ export default function PostulacionEspecialistaPage() {
 
     try {
       const supabase = createClient();
-      // Necesito el token JWT de Supabase para enviarlo al BFF
       const { data: { session } } = await supabase.auth.getSession();
       const token = session?.access_token;
 
@@ -62,7 +81,7 @@ export default function PostulacionEspecialistaPage() {
       formData.append('id_categoria', idCategoria);
       formData.append('zona', zona);
       formData.append('descripcion', descripcion);
-      formData.append('telefono', telefono);
+      formData.append('telefono', `+549${digitosTelefono}`);
       formData.append('dni', dniFile);
       formData.append('certificado', certFile);
 
@@ -149,15 +168,35 @@ export default function PostulacionEspecialistaPage() {
             />
           </div>
 
-          <Input
-            label="Teléfono de contacto (WhatsApp) *"
-            placeholder="Ej: +5493510000000"
-            type="tel"
-            autoComplete="tel"
-            value={telefono}
-            onChange={(e) => setTelefono(e.target.value)}
-            required
-          />
+          <div>
+            <label htmlFor={telefonoId} className="block text-sm font-medium text-slate-700 mb-1">
+              Teléfono de contacto (WhatsApp) *
+            </label>
+            <div className="flex rounded-md shadow-xs">
+              <span
+                aria-hidden="true"
+                className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-slate-300 bg-slate-100 text-slate-700 font-semibold text-sm select-none whitespace-nowrap shrink-0"
+              >
+                +54 9
+              </span>
+              <input
+                id={telefonoId}
+                type="tel"
+                autoComplete="tel"
+                inputMode="numeric"
+                maxLength={10}
+                placeholder="Ej: 3512345678"
+                value={telefono}
+                onChange={(e) => setTelefono(normalizarTelefono10(e.target.value))}
+                required
+                aria-describedby={`${telefonoId}-hint`}
+                className="flex h-10 w-full min-w-0 rounded-none rounded-r-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-200"
+              />
+            </div>
+            <p id={`${telefonoId}-hint`} className="mt-1 text-xs text-slate-500">
+              Ingresá 10 dígitos (código de área sin 0 y número sin 15).
+            </p>
+          </div>
 
           <div>
             <label htmlFor={descripcionId} className="block text-sm font-medium text-slate-700 mb-1">
@@ -216,8 +255,11 @@ export default function PostulacionEspecialistaPage() {
               {isSubmitting ? 'Enviando postulación...' : 'Enviar Postulación'}
             </Button>
             <p className="mt-3 text-xs text-center text-slate-500">
-              Al enviar tu postulación aceptas nuestros Términos y Condiciones.
-              Tu perfil será revisado por un administrador en las próximas 48 horas.
+              Al enviar tu postulación aceptas nuestros{' '}
+              <Link href="/terminos" className="text-blue-600 hover:underline font-medium">
+                Términos y Condiciones
+              </Link>
+              . Tu perfil será revisado por un administrador en las próximas 48 horas.
             </p>
           </div>
         </form>

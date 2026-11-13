@@ -42,3 +42,21 @@ Este documento registra las modificaciones y adaptaciones tecnicas realizadas so
 - **Plan original:** Previa separar el listado publico de especialistas con filtros laterales (/especialistas) y la vista de perfil individual (/especialistas/:id), ademas de guardar el historial de busquedas del usuario.
 - **Implementacion real:** Se mostraron las tarjetas completas de los especialistas aprobados (con foto, zona, descripcion, calificacion y boton de WhatsApp) directamente en la pantalla de resultados (/buscar) debajo de los videos tutoriales, omitiendo por ahora el historial de busquedas.
 - **Justificacion:** Reduce pasos de navegacion para que el usuario logueado encuentre ayuda mas rapido en una sola vista y prioriza el alcance principal del MVP Base al trabajar un solo integrante en el desarrollo.
+
+## Sprint 4: Reseñas, Estado de Postulacion y Cierre
+
+### 1. Recalculo inmediato de calificaciones por trigger en PostgreSQL
+- **Plan original:** Proponia ejecutar el trigger o logica de recalculo de promedio de estrellas en un horario de baja concurrencia.
+- **Implementacion real:** Se configuro el trigger `on_resena_changed` (`AFTER INSERT OR UPDATE OR DELETE`) para actualizar de forma inmediata `promedio_estrellas` y `total_resenas` en `especialista` cada vez que un usuario registra o edita una reseña.
+- **Justificacion:** El volumen de escrituras esperado en el MVP es bajo y el recalculo inmediato evita inconsistencias visuales, logrando que tanto el modal como las tarjetas de `/buscar` muestren el promedio actualizado al instante.
+
+### 2. Reseñas en modal dentro de /buscar en lugar de ruta separada
+- **Plan original:** Ubicaba el listado de reseñas y el formulario de calificacion dentro de la vista individual del especialista (`/especialistas/:id`).
+- **Implementacion real:** Se implemento `ResenasModal` (elemento `<dialog>` nativo) accesible directamente desde cada tarjeta en `/buscar`.
+- **Justificacion:** Mantiene la coherencia con la simplificacion arquitectonica del Sprint 3, evitando saltos de pagina adicionales mientras conserva todas las reglas de negocio del CU-06 (contacto previo, unicidad, edicion de opinion propia y bloqueo de autocalificacion).
+
+### 3. Consulta directa del estado de postulacion en el modal
+- **Plan original:** En el Sprint 2 se habia postergado la notificacion por WhatsApp al aprobar o rechazar postulaciones.
+- **Implementacion real:** Se incorporo el endpoint `GET /api/especialistas/v1/mi-postulacion` y vistas de estado dentro de `PostulacionModal` para informar en linea si la solicitud esta `Pendiente`, `Aprobado` o `Rechazado` (mostrando el `motivo_rechazo` con opcion de reenvio precargado).
+- **Justificacion:** Resuelve la devolucion de estado hacia el postulante dentro de la propia plataforma sin requerir integracion paga de mensajeria externa.
+
