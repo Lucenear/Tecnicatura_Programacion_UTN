@@ -59,10 +59,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const getSession = async () => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
-        if (error) {
-          console.error("Auth session error:", error);
-        }
+        const { data: { session } } = await supabase.auth.getSession();
         if (!activo) return;
 
         setUser(session?.user ?? null);
@@ -74,8 +71,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         } else {
           setEsAdmin(false);
         }
-      } catch (err) {
-        console.error("Exception getting session:", err);
+      } catch {
         if (activo) {
           setEsAdmin(false);
           setLoading(false);

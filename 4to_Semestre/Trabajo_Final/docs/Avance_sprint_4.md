@@ -47,7 +47,11 @@
 
 ## Alcance de IA (Ollama)
 
-- Siguiendo la estrategia de MVP escalonado definida en la propuesta original, priorizamos completar y verificar el flujo integral de reseñas (CU-06), estado de postulaciones y cierre legal antes de avanzar con la integracion opcional del modelo local de Ollama en la VPS, manteniendose operativo el clasificador por palabras clave en el backend.
+- Integramos con exito el modelo local `llama3.2:3b` alojado en la VPS (CasaOS / Docker) para generar diagnosticos orientativos asistidos por IA y advertencias de seguridad sin costo de APIs externas ni fuga de datos.
+- Adoptamos una arquitectura de carga asincrona progresiva: la busqueda principal entrega de inmediato los videos y especialistas, mientras el endpoint `/api/buscar/v1/diagnostico` consulta a Ollama en segundo plano e inyecta la tarjeta de diagnostico sin demorar la experiencia del usuario.
+- En caso de que el servicio de Ollama este inactivo o demore mas del tiempo limite establecido, el sistema degrada de forma transparente conservando la clasificacion y los resultados al 100%.
+- Ajustamos el prompt del modelo para devolver guias estructuradas en pasos numerados con saltos de linea y consejos de seguridad discriminados por tipo de riesgo.
+- Protegemos la concurrencia del cliente en el buscador mediante memorizacion de la ultima consulta y desacople de referencias de sesion, impidiendo re-ejecuciones duplicadas hacia Ollama al alternar pestanas en el navegador.
 
 ## Obstaculos tecnicos que enfrentamos
 

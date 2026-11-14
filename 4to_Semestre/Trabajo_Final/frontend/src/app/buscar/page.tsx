@@ -1,9 +1,9 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Search, Video, Star, MapPin, AlertCircle, ArrowLeft, Wrench, ShieldCheck, Lock } from "lucide-react";
+import { Search, Video, Star, MapPin, AlertCircle, ArrowLeft, Wrench, ShieldCheck, Lock, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/context/AuthContext";
 import { usePostulacionModal } from "@/components/especialista/PostulacionContext";
@@ -30,6 +30,14 @@ interface EspecialistaItem {
   usuario?: { nombre: string; avatar_url: string | null };
 }
 
+interface DiagnosticoIA {
+  disponible: boolean;
+  diagnostico: string | null;
+  consejo_seguridad: string | null;
+  es_urgente?: boolean;
+  modelo?: string;
+}
+
 interface SearchResponse {
   query: string;
   categoria: { id: number; nombre: string } | null;
@@ -40,18 +48,22 @@ interface SearchResponse {
 function ContenidoBuscar({ qParam }: { qParam: string }) {
   const router = useRouter();
   const { user, loading: authLoading, signInWithGoogle } = useAuth();
+  const userId = user?.id;
   const { abrirModalPostulacion } = usePostulacionModal();
 
   const [inputQuery, setInputQuery] = useState(qParam);
   const [data, setData] = useState<SearchResponse | null>(null);
+  const [diagnosticoIA, setDiagnosticoIA] = useState<DiagnosticoIA | null>(null);
+  const [cargandoIA, setCargandoIA] = useState(false);
   const [isLoading, setIsLoading] = useState(Boolean(qParam.trim()));
   const [error, setError] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState(0);
   const [contactandoId, setContactandoId] = useState<string | null>(null);
   const [especialistaResenas, setEspecialistaResenas] = useState<EspecialistaResumen | null>(null);
+  const ultimaConsultaIARef = useRef<string>("");
 
   useEffect(() => {
-    if (authLoading || !user || !qParam.trim()) {
+    if (authLoading || !userId || !qParam.trim()) {
       return;
     }
 
@@ -68,6 +80,36 @@ function ContenidoBuscar({ qParam }: { qParam: string }) {
         }
 
         const API_URL = process.env.NEXT_PUBLIC_BFF_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+        const consultarIA = async (tkn: string) => {
+          if (ultimaConsultaIARef.current === qParam.trim() && diagnosticoIA) {
+            return;
+          }
+          try {
+            if (activo) setCargandoIA(true);
+            const resIA = await fetch(`${API_URL}/api/buscar/v1/diagnostico?q=${encodeURIComponent(qParam.trim())}`, {
+              headers: {
+                Authorization: `Bearer ${tkn}`
+              }
+            });
+            if (!resIA.ok) {
+              if (activo) setDiagnosticoIA(null);
+              return;
+            }
+            const jsonIA = await resIA.json();
+            if (activo) {
+              ultimaConsultaIARef.current = qParam.trim();
+              setDiagnosticoIA(jsonIA.disponible ? jsonIA : null);
+            }
+          } catch {
+            if (activo) setDiagnosticoIA(null);
+          } finally {
+            if (activo) setCargandoIA(false);
+          }
+        };
+
+        consultarIA(token);
+
         const res = await fetch(`${API_URL}/api/buscar/v1?q=${encodeURIComponent(qParam.trim())}`, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -104,7 +146,7 @@ function ContenidoBuscar({ qParam }: { qParam: string }) {
     return () => {
       activo = false;
     };
-  }, [qParam, user, authLoading, retryCount]);
+  }, [qParam, userId, authLoading, retryCount]);
 
   const handleLoginParaBuscar = async () => {
     await signInWithGoogle();
@@ -305,7 +347,7 @@ function ContenidoBuscar({ qParam }: { qParam: string }) {
                 Resultados para: <span className="text-blue-600">&quot;{data.query}&quot;</span>
               </h1>
               <div className="mt-2 flex items-center gap-2">
-                <span className="text-sm text-slate-500">Categoría detectada:</span>
+                <span className="text-sm text-slate-500">Categoría:</span>
                 {data.categoria ? (
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
                     {data.categoria.nombre}
@@ -317,6 +359,52 @@ function ContenidoBuscar({ qParam }: { qParam: string }) {
                 )}
               </div>
             </div>
+
+            {cargandoIA && (
+              <div className="rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50/60 to-indigo-50/60 p-4 sm:p-5 shadow-xs flex items-center gap-3 animate-pulse">
+                <div className="h-9 w-9 rounded-xl bg-blue-200/70 flex items-center justify-center shrink-0">
+                  <Sparkles className="h-5 w-5 text-blue-600 animate-spin" />
+                </div>
+                <div>
+                  <h2 className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                    FixYa IA analizando tu problema...
+                  </h2>
+                  <p className="text-xs text-slate-500">
+                    Generando un diagnóstico preliminar orientativo.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {!cargandoIA && diagnosticoIA?.diagnostico && (
+              <div className="rounded-2xl border border-blue-200/80 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/40 p-5 sm:p-6 shadow-sm space-y-3.5">
+                <div className="flex items-center gap-2.5">
+                  <div className="h-8 w-8 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-xs">
+                    <Sparkles className="h-4.5 w-4.5" />
+                  </div>
+                  <div>
+                    <h2 className="text-sm sm:text-base font-bold text-slate-900 leading-tight">
+                      Diagnóstico asistido por FixYa IA
+                    </h2>
+                  </div>
+                </div>
+
+                <p className="text-sm text-slate-800 leading-relaxed font-normal bg-white/80 p-3.5 rounded-xl border border-blue-100/60 shadow-2xs whitespace-pre-line">
+                  {diagnosticoIA.diagnostico}
+                </p>
+
+                {diagnosticoIA.consejo_seguridad && (
+                  <div className="flex items-start gap-2 text-xs font-medium text-amber-900 bg-amber-50 border border-amber-200 rounded-xl p-3">
+                    <AlertCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                    <span><strong>Consejo de seguridad:</strong> {diagnosticoIA.consejo_seguridad}</span>
+                  </div>
+                )}
+
+                <p className="text-[11px] text-slate-400 italic">
+                  Orientación preliminar orientativa generada por IA. No reemplaza el asesoramiento ni la inspección presencial de un profesional matriculado.
+                </p>
+              </div>
+            )}
 
             <section className="space-y-5">
               <div className="flex items-center space-x-2">

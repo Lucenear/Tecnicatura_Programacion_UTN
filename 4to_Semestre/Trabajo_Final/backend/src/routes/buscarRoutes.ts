@@ -2,8 +2,31 @@ import express from 'express';
 import { clasificarConsulta } from '../services/clasificadorService.js';
 import { buscarVideosYouTube } from '../services/youtubeService.js';
 import { requireAuth, supabase } from '../middlewares/authMiddleware.js';
+import { generarDiagnosticoIA } from '../services/ollamaService.js';
 
 const router = express.Router();
+
+router.get('/diagnostico', requireAuth, async (req, res) => {
+  try {
+    const q = (req.query.q as string || '').trim();
+    if (!q) {
+      return res.status(400).json({ error: 'Debes proporcionar un término de búsqueda' });
+    }
+
+    console.log(`[BFF] Solicitud recibida en /api/buscar/v1/diagnostico para: "${q}"`);
+    const resultado = await generarDiagnosticoIA(q);
+    if (!resultado) {
+      console.log(`[BFF] Diagnóstico IA devolvió null para: "${q}"`);
+      return res.status(200).json({ disponible: false, diagnostico: null });
+    }
+
+    console.log(`[BFF] Diagnóstico IA respondiendo 200 OK para: "${q}"`);
+    return res.status(200).json({ disponible: true, ...resultado });
+  } catch (err) {
+    console.error('[BFF] Error inesperado en /api/buscar/v1/diagnostico:', err);
+    return res.status(200).json({ disponible: false, diagnostico: null });
+  }
+});
 
 router.get('/', requireAuth, async (req, res) => {
   try {

@@ -104,7 +104,6 @@ export default function PostulacionEspecialistaPage() {
       router.push('/quiero-ser-especialista/success');
       
     } catch (err: unknown) {
-      console.error(err);
       const mensaje = err instanceof Error ? err.message : 'Ocurrió un error inesperado. Intenta de nuevo.';
       setError(mensaje);
     } finally {
