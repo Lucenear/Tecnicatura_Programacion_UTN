@@ -1,0 +1,41 @@
+@baseUrl = http://localhost:8000
+
+GET {{baseUrl}}/ingredientes
+
+###
+GET {{baseUrl}}/ingredientes/1
+
+###
+POST {{baseUrl}}/ingredientes
+Content-Type: application/json
+
+{
+  "nombre": "Mayonesa"
+}
+
+###
+POST {{baseUrl}}/ingredientes
+Content-Type: application/json
+
+{
+  "nombre": "Pan de papa"
+}
+
+###
+POST {{baseUrl}}/ingredientes
+Content-Type: application/json
+
+{
+  "nombre": "   "
+}
+
+###
+PUT {{baseUrl}}/ingredientes/1
+Content-Type: application/json
+
+{
+  "nombre": "Pan Brioche"
+}
+
+###
+DELETE {{baseUrl}}/ingredientes/9999

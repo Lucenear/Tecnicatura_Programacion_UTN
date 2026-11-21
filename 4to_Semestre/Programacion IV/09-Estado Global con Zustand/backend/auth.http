@@ -1,0 +1,33 @@
+@baseUrl = http://localhost:8000
+
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Carlos",
+  "apellido": "Lopez",
+  "email": "carlos@foodstore.com",
+  "celular": "1144556677",
+  "password": "password123"
+}
+
+###
+POST {{baseUrl}}/auth/token
+Content-Type: application/x-www-form-urlencoded
+
+username=admin@foodstore.com&password=admin1234
+
+###
+POST {{baseUrl}}/auth/token
+Content-Type: application/x-www-form-urlencoded
+
+username=user@foodstore.com&password=user1234
+
+###
+GET {{baseUrl}}/auth/me
+
+###
+GET {{baseUrl}}/auth/admin/usuarios
+
+###
+POST {{baseUrl}}/auth/logout

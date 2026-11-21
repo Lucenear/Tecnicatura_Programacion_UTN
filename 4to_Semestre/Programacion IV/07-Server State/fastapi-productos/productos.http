@@ -1,0 +1,90 @@
+GET http://localhost:8000/categorias/
+
+###
+
+POST http://localhost:8000/categorias/
+Content-Type: application/json
+
+{
+  "nombre": "Tecnologia",
+  "descripcion": "Dispositivos electronicos y computacion"
+}
+
+###
+
+GET http://localhost:8000/categorias/1
+
+###
+
+PUT http://localhost:8000/categorias/1
+Content-Type: application/json
+
+{
+  "nombre": "Tecnologia y Hogar",
+  "descripcion": "Dispositivos electronicos del hogar"
+}
+
+###
+
+POST http://localhost:8000/productos/
+Content-Type: application/json
+
+{
+  "nombre": "Monitor Gamer 24",
+  "descripcion": "Monitor LED 144Hz 1ms para juegos",
+  "precio_base": 199.99,
+  "imagenes_url": [
+    "http://ejemplo.com/monitor1.jpg",
+    "http://ejemplo.com/monitor2.jpg"
+  ],
+  "disponible": true
+}
+
+###
+
+GET http://localhost:8000/productos/
+
+###
+
+GET http://localhost:8000/productos/1
+
+###
+
+PUT http://localhost:8000/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Monitor Gamer 24 Pro",
+  "descripcion": "Monitor LED 165Hz con panel IPS",
+  "precio_base": 229.99,
+  "imagenes_url": [
+    "http://ejemplo.com/monitor1.jpg"
+  ],
+  "disponible": true
+}
+
+###
+
+POST http://localhost:8000/productos/1/categorias
+Content-Type: application/json
+
+{
+  "categoria_id": 1,
+  "es_principal": true
+}
+
+###
+
+GET http://localhost:8000/productos/1/categorias
+
+###
+
+DELETE http://localhost:8000/productos/1/categorias/1
+
+###
+
+DELETE http://localhost:8000/productos/1
+
+###
+
+DELETE http://localhost:8000/categorias/1

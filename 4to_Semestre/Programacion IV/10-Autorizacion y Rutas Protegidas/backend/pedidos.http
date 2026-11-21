@@ -1,0 +1,107 @@
+@baseUrl = http://localhost:8000
+
+GET {{baseUrl}}/pedidos
+
+###
+GET {{baseUrl}}/pedidos/1
+
+###
+POST {{baseUrl}}/pedidos
+Content-Type: application/json
+
+{
+  "detalles": [
+    {
+      "producto_id": 1,
+      "cantidad": 2
+    },
+    {
+      "producto_id": 3,
+      "cantidad": 1
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/pedidos
+Content-Type: application/json
+
+{
+  "detalles": [
+    {
+      "producto_id": 1,
+      "cantidad": 1
+    },
+    {
+      "producto_id": 1,
+      "cantidad": 2
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/pedidos
+Content-Type: application/json
+
+{
+  "detalles": [
+    {
+      "producto_id": 1,
+      "cantidad": 0
+    }
+  ]
+}
+
+###
+POST {{baseUrl}}/pedidos
+Content-Type: application/json
+
+{
+  "detalles": []
+}
+
+###
+POST {{baseUrl}}/pedidos
+Content-Type: application/json
+
+{
+  "detalles": [
+    {
+      "producto_id": 9999,
+      "cantidad": 1
+    }
+  ]
+}
+
+###
+PUT {{baseUrl}}/pedidos/1
+Content-Type: application/json
+
+{
+  "estado": "ENTREGADO"
+}
+
+###
+PUT {{baseUrl}}/pedidos/1
+Content-Type: application/json
+
+{
+  "estado": "INVALIDO"
+}
+
+###
+PUT {{baseUrl}}/pedidos/9999
+Content-Type: application/json
+
+{
+  "estado": "CONFIRMADO"
+}
+
+###
+DELETE {{baseUrl}}/pedidos/1
+
+###
+GET {{baseUrl}}/pedidos/1
+
+###
+DELETE {{baseUrl}}/pedidos/9999

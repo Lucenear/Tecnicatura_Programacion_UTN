@@ -1,0 +1,45 @@
+@baseUrl = http://localhost:8000
+
+GET {{baseUrl}}/categorias
+
+###
+GET {{baseUrl}}/categorias/1
+
+###
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Ensaladas",
+  "descripcion": "Ensaladas frescas"
+}
+
+###
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Hamburguesas",
+  "descripcion": "Duplicado"
+}
+
+###
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+
+{
+  "nombre": "   ",
+  "descripcion": "Nombre vacio"
+}
+
+###
+PUT {{baseUrl}}/categorias/1
+Content-Type: application/json
+
+{
+  "nombre": "Hamburguesas Premium",
+  "descripcion": "Hamburguesas artesanales"
+}
+
+###
+DELETE {{baseUrl}}/categorias/9999

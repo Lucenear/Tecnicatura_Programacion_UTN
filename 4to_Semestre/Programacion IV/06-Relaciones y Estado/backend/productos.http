@@ -1,0 +1,62 @@
+GET http://localhost:8000/productos HTTP/1.1
+
+###
+
+POST http://localhost:8000/productos HTTP/1.1
+Content-Type: application/json
+
+{
+  "nombre": "Pizza Especial",
+  "descripcion": "Jamon, morrones y muzzarella",
+  "precio_base": "7200",
+  "imagen_url": [
+    "https://ejemplo.com/pizza1.jpg",
+    "https://ejemplo.com/pizza2.jpg"
+  ],
+  "disponible": true,
+  "categoria_ids": [1]
+}
+
+###
+
+GET http://localhost:8000/productos/1 HTTP/1.1
+
+###
+
+PUT http://localhost:8000/productos/1 HTTP/1.1
+Content-Type: application/json
+
+{
+  "nombre": "Pizza Especial Doble Queso",
+  "precio_base": "8000"
+}
+
+###
+
+GET http://localhost:8000/producto-categoria HTTP/1.1
+
+###
+
+POST http://localhost:8000/producto-categoria HTTP/1.1
+Content-Type: application/json
+
+{
+  "producto_id": 1,
+  "categoria_id": 2
+}
+
+###
+
+DELETE http://localhost:8000/producto-categoria/1/2 HTTP/1.1
+
+###
+
+POST http://localhost:8000/productos/1/categorias/2 HTTP/1.1
+
+###
+
+DELETE http://localhost:8000/productos/1/categorias/2 HTTP/1.1
+
+###
+
+DELETE http://localhost:8000/productos/1 HTTP/1.1

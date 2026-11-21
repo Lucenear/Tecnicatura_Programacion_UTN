@@ -1,0 +1,52 @@
+@baseUrl = http://localhost:8000
+
+GET {{baseUrl}}/productos
+
+###
+GET {{baseUrl}}/productos/1
+
+###
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Agua Mineral",
+  "descripcion": "Agua sin gas 500ml",
+  "precio_base": 400.0,
+  "disponible": true,
+  "categoria_id": 2
+}
+
+###
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Producto Invalido",
+  "descripcion": "Precio negativo",
+  "precio_base": -50.0,
+  "disponible": true
+}
+
+###
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Producto Categoria Inexistente",
+  "descripcion": "Categoria id 9999",
+  "precio_base": 100.0,
+  "disponible": true,
+  "categoria_id": 9999
+}
+
+###
+PUT {{baseUrl}}/productos/1
+Content-Type: application/json
+
+{
+  "precio_base": 1800.0
+}
+
+###
+DELETE {{baseUrl}}/productos/9999
