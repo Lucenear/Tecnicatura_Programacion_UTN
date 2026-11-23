@@ -1,0 +1,111 @@
+POST http://localhost:8000/api/v1/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Pastas",
+  "descripcion": "Pastas caseras y salsas"
+}
+
+###
+
+POST http://localhost:8000/api/v1/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Promociones",
+  "descripcion": "Ofertas y combos especiales"
+}
+
+###
+
+POST http://localhost:8000/api/v1/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Pastas",
+  "descripcion": "Intento de duplicar categoria activa 409"
+}
+
+###
+
+POST http://localhost:8000/api/v1/categorias
+Content-Type: application/json
+
+{
+  "nombre": "Ab",
+  "descripcion": "Error 422 nombre menor a 3 caracteres"
+}
+
+###
+
+GET http://localhost:8000/api/v1/categorias
+
+###
+
+POST http://localhost:8000/api/v1/productos
+Content-Type: application/json
+
+{
+  "nombre": "Ravioles de verdura",
+  "descripcion": "Ravioles caseros con salsa",
+  "precio_base": 3200.0,
+  "unidad_venta_id": 1,
+  "stock_cantidad": 15.5,
+  "disponible": true
+}
+
+###
+
+POST http://localhost:8000/api/v1/productos/2/categorias
+Content-Type: application/json
+
+{
+  "categoria_id": 1,
+  "es_principal": true
+}
+
+###
+
+POST http://localhost:8000/api/v1/productos/2/categorias
+Content-Type: application/json
+
+{
+  "categoria_id": 2,
+  "es_principal": true
+}
+
+###
+
+GET http://localhost:8000/api/v1/productos/2/categorias
+
+###
+
+POST http://localhost:8000/api/v1/productos/2/categorias
+Content-Type: application/json
+
+{
+  "categoria_id": 1,
+  "es_principal": false
+}
+
+###
+
+GET http://localhost:8000/api/v1/productos?categoria_id=1
+
+###
+
+DELETE http://localhost:8000/api/v1/categorias/1
+
+###
+
+GET http://localhost:8000/api/v1/productos/2
+
+###
+
+POST http://localhost:8000/api/v1/productos/2/categorias
+Content-Type: application/json
+
+{
+  "categoria_id": 1,
+  "es_principal": false
+}

@@ -1,0 +1,203 @@
+GET http://localhost:8000/api/v1/unidades-medida
+
+###
+
+POST http://localhost:8000/api/v1/productos
+Content-Type: application/json
+
+{
+  "nombre": "Empanada criolla",
+  "descripcion": "Empanada de carne cortada a cuchillo",
+  "precio_base": 1200.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 24,
+  "disponible": true
+}
+
+###
+
+POST http://localhost:8000/api/v1/productos
+Content-Type: application/json
+
+{
+  "nombre": "No",
+  "descripcion": "Nombre demasiado corto",
+  "precio_base": 500.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 10,
+  "disponible": true
+}
+
+###
+
+POST http://localhost:8000/api/v1/productos
+Content-Type: application/json
+
+{
+  "nombre": "Producto precio negativo",
+  "descripcion": "Prueba error 422",
+  "precio_base": -100.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 10,
+  "disponible": true
+}
+
+###
+
+POST http://localhost:8000/api/v1/productos
+Content-Type: application/json
+
+{
+  "nombre": "Producto stock negativo",
+  "descripcion": "Prueba error 422",
+  "precio_base": 100.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": -5,
+  "disponible": true
+}
+
+###
+
+POST http://localhost:8000/api/v1/productos
+Content-Type: application/json
+
+{
+  "nombre": "Producto contable con decimales",
+  "descripcion": "Prueba error 422 en unidad contable",
+  "precio_base": 250.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 3.5,
+  "disponible": true
+}
+
+###
+
+POST http://localhost:8000/api/v1/productos
+Content-Type: application/json
+
+{
+  "nombre": "Producto unidad inexistente",
+  "descripcion": "Prueba error 404 unidad",
+  "precio_base": 250.0,
+  "unidad_venta_id": 9999,
+  "stock_cantidad": 10,
+  "disponible": true
+}
+
+###
+
+POST http://localhost:8000/api/v1/productos
+Content-Type: application/json
+
+{
+  "nombre": "Empanada criolla",
+  "descripcion": "Intento de duplicar nombre activo",
+  "precio_base": 1500.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 12,
+  "disponible": true
+}
+
+###
+
+GET http://localhost:8000/api/v1/productos
+
+###
+
+GET http://localhost:8000/api/v1/productos?activo=true
+
+###
+
+GET http://localhost:8000/api/v1/productos?disponible=true
+
+###
+
+GET http://localhost:8000/api/v1/productos?search=Empanada
+
+###
+
+GET http://localhost:8000/api/v1/productos?skip=0&limit=5
+
+###
+
+GET http://localhost:8000/api/v1/productos/1
+
+###
+
+GET http://localhost:8000/api/v1/productos/9999
+
+###
+
+PUT http://localhost:8000/api/v1/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Empanada criolla tradicional",
+  "descripcion": "Empanada horneada",
+  "precio_base": 1300.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 0,
+  "disponible": true
+}
+
+###
+
+GET http://localhost:8000/api/v1/productos/1
+
+###
+
+PUT http://localhost:8000/api/v1/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Empanada criolla tradicional",
+  "descripcion": "Prueba decimal en contable con PUT",
+  "precio_base": 1300.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 2.5,
+  "disponible": true
+}
+
+###
+
+PUT http://localhost:8000/api/v1/productos/9999
+Content-Type: application/json
+
+{
+  "nombre": "Producto inexistente",
+  "descripcion": "Prueba 404",
+  "precio_base": 1000.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 10,
+  "disponible": true
+}
+
+###
+
+DELETE http://localhost:8000/api/v1/productos/1
+
+###
+
+DELETE http://localhost:8000/api/v1/productos/1
+
+###
+
+DELETE http://localhost:8000/api/v1/productos/9999
+
+###
+
+PUT http://localhost:8000/api/v1/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Empanada modificada",
+  "descripcion": "Prueba modificar anulado 409",
+  "precio_base": 1500.0,
+  "unidad_venta_id": 5,
+  "stock_cantidad": 5,
+  "disponible": true
+}
+
+###
+
+GET http://localhost:8000/api/v1/productos?activo=false
